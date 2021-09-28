@@ -1,3 +1,25 @@
+## How to setup project
+
+1. Clone the repo to your local.
+
+```
+git clone https://github.com/egecavusoglu/kost.git
+```
+
+2. Install dependencies.
+
+- navigate to the project folder in your terminal.
+
+```
+yarn
+```
+
+3. Start the dev server with `yarn dev`.
+
+```
+yarn dev
+```
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
