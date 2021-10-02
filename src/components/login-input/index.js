@@ -5,12 +5,14 @@ import {
   Input,
   FormControl,
   FormLabel,
-  FormHelperText,
   FormErrorMessage,
   Button,
+  Heading,
+  Text,
 } from '@chakra-ui/react';
-import Link from 'components/link';
-import Logo from 'components/logo';
+import Link from 'src/components/link';
+import Logo from 'src/components/logo';
+import { validateEmail } from 'src/helpers/email';
 
 /**
  * Login input component.
@@ -26,8 +28,9 @@ const LoginInput = ({ ...props }) => {
     setEmail(val);
     setInvalidEmail(!validateEmail(val));
   };
+
   return (
-    <Box rounded="md" w="sm" shadow="lg" overflow="hidden">
+    <Box rounded="md" w="sm" h="min" shadow="lg" overflow="hidden">
       <Box
         d="flex"
         bg="secondary.600"
@@ -39,14 +42,17 @@ const LoginInput = ({ ...props }) => {
           <Logo size={12} />
         </Link>
       </Box>
-      <Box p={6} border="0px" borderColor="gray.200" bg="white">
-        <FormControl isInvalid={invalidEmail} id="email">
+      <Stack py={2} px={5} border="0px" borderColor="gray.200" bg="white" spacing={5}>
+        <Heading as="h1" color={'gray.700'} size="md">
+          Log in
+        </Heading>
+        <FormControl mt={4} isInvalid={invalidEmail} id="email">
           <FormLabel color="gray.700">Email Address</FormLabel>
           <Input type="email" onChange={handleEmailChange} value={email} isRequired={true} />
           <FormErrorMessage fontSize="xs">Please use a valid email.</FormErrorMessage>
           {/* <FormHelperText fontSize="xs">let us take you to your dashboard.</FormHelperText> */}
         </FormControl>
-        <FormControl mt={6}>
+        <FormControl mt={4}>
           <FormLabel color="gray.700">Password</FormLabel>
           <Input
             type="password"
@@ -55,20 +61,18 @@ const LoginInput = ({ ...props }) => {
             isRequired={true}
           />
         </FormControl>
-        <Box d="flex" alignItems="center" mt={6}>
-          <Button w={'70%'} size="md" mx="auto" colorScheme="primary" isDisabled={loading}>
-            Log in
+        <Stack d="flex" flexDirection={'column'} spacing={4} alignItems="center">
+          <Button w={'50%'} size="md" mx="auto" colorScheme="primary" isDisabled={loading}>
+            Log In
           </Button>
-        </Box>
-      </Box>
+
+          <Text color="gray.600">
+            Don&apos;t have an account? <Link to="/signup">Sign up</Link>
+          </Text>
+        </Stack>
+      </Stack>
     </Box>
   );
-
-  function validateEmail(email) {
-    const re =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  }
 };
 
 export default LoginInput;
