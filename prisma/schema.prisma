@@ -8,14 +8,11 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
 }
 
 // Data Models
 
-// Auth
-
-// User 
+// User Model
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
