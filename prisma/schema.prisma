@@ -12,9 +12,14 @@ generator client {
 }
 
 // Data Models
+
+// Auth
+
+// User 
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
-  firstName  String
+  hashedPassword String
+  firstName String
   lastName String
 }
