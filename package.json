@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettify": "npx prettier --write '**/*.js'"
+    "prettify": "npx prettier --write '**/*.js'",
+    "update-db": "npx prisma db push",
+    "prisma-ui": "npx prisma studio"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.8",
