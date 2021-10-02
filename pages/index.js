@@ -16,7 +16,14 @@ export default function Home() {
           </Heading>
           <Box mt={2}>
             <Text>Pages Working On:</Text>
-            <Link to="/login">Login</Link>
+            <ol>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/signup">Signup</Link>
+              </li>
+            </ol>
           </Box>
         </Box>
       </Center>

@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import Link from 'src/components/link';
 import Logo from 'src/components/logo';
-import { validateEmail } from 'src/helpers/email';
+import { validateEmail } from 'src/lib/email';
 
 /**
  * Login input component.
@@ -43,7 +43,7 @@ const LoginInput = ({ ...props }) => {
         </Link>
       </Box>
       <Stack py={2} px={5} border="0px" borderColor="gray.200" bg="white" spacing={5}>
-        <Heading as="h1" color={'gray.700'} size="md">
+        <Heading as="h1" color={'secondary.600'} size="md">
           Log in
         </Heading>
         <FormControl mt={4} isInvalid={invalidEmail} id="email">

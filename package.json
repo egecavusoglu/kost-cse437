@@ -8,14 +8,14 @@
     "start": "next start",
     "lint": "next lint",
     "prettify": "npx prettier --write '**/*.js'",
-    "update-db": "npx prisma db push",
+    "update-prisma": "npx prisma db push && npx prisma generate",
     "prisma-ui": "npx prisma studio"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.8",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
-    "@prisma/client": "3.1.1",
+    "@prisma/client": "^3.1.1",
     "framer-motion": "^4",
     "next": "11.1.2",
     "react": "17.0.2",
