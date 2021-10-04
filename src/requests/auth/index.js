@@ -16,4 +16,20 @@ async function signup({ firstName, lastName, email, password }) {
   }
 }
 
-export { signup };
+async function login(email, pwd) {
+  try {
+    const response = await postRequest({
+      url: 'api/login',
+      body: { email: email, password: pwd },
+    });
+    if (response.isSuccess) {
+      return response;
+    }
+    throw response.error;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
+export { login, signup };

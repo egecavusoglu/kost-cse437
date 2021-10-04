@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'src/components/link';
 import { Center, Box, Heading, Text } from '@chakra-ui/react';
+import { useEffect } from 'react';
 export default function Home() {
   return (
     <div>
