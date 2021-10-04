@@ -105,7 +105,7 @@ const LoginInput = ({ ...props }) => {
               <FormErrorMessage fontSize="xs">Please use a valid email.</FormErrorMessage>
             </FormControl>
           </HStack>
-          <FormControl isInvalid={invalidEmail} isRequired={true} id="email">
+          <FormControl isInvalid={invalidEmail} isRequired id="email">
             <FormLabel color="gray.700">Email Address</FormLabel>
             <Input type="email" onChange={handleEmailChange} value={email} />
             <FormErrorMessage fontSize="xs">Please use a valid email.</FormErrorMessage>

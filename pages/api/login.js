@@ -2,6 +2,15 @@ import bcrypt from 'bcrypt';
 import { generateAccessToken } from 'src/lib/jwt';
 import { setAuthCookie } from 'src/lib/cookie';
 
+/**
+ * @endpoint /login
+ * @post
+ * {
+ *  email: String,
+ *  password: String
+ * }
+ */
+
 export default async function handler(req, res) {
   try {
     if (req.method == 'POST') {
