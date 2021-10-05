@@ -16,7 +16,7 @@ export default async function handler(req, res) {
           id: id,
         },
       });
-      user.hashedPassword = undefined;
+      user.hashedPassword = undefined; // Don't include password hash in the user object
       return res.status(200).json({ isSuccess: true, data: { user: user } });
     }
     res.status(404).json({ isSuccess: false, error: 'Route not found!' });

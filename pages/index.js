@@ -1,8 +1,32 @@
 import Head from 'next/head';
 import Link from 'src/components/link';
-import { Center, Box, Heading, Text } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { Center, Box, Button, HStack, Heading, Text, useToast } from '@chakra-ui/react';
+import { useAuthStore } from 'src/store';
+import { logout } from 'src/requests/auth';
 export default function Home() {
+  const toast = useToast();
+  const user = useAuthStore((s) => s.user);
+
+  const handleLogout = async () => {
+    const res = await logout();
+    if (res) {
+      return toast({
+        title: 'You have been logged out.',
+        description: "We've created your account for you.",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+    toast({
+      title: 'Oops.',
+      description: "We've encountered an error.",
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    });
+  };
+
   return (
     <div>
       <Head>
@@ -15,6 +39,20 @@ export default function Home() {
           <Heading as="h1" color={'white'} size="lg">
             Kost Home Page!
           </Heading>
+          <Box my={2}>
+            {user ? (
+              <HStack>
+                <Text>
+                  You are logged in as {user.firstName} {user.lastName}
+                </Text>
+                <Button onClick={handleLogout} variant="ghost">
+                  Log out
+                </Button>
+              </HStack>
+            ) : (
+              <Text> You are not logged in </Text>
+            )}
+          </Box>
           <Box mt={2}>
             <Text>Pages Working On:</Text>
             <ol>
