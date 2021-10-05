@@ -12,7 +12,7 @@ function getRequest({ url, headers }) {
     .catch((err) => err);
 }
 
-function postRequest({ url, body, headers }) {
+function postRequest({ url, body = {}, headers }) {
   return fetch(url, {
     headers: { headers, ...SHARED_HEADERS },
     method: 'POST',

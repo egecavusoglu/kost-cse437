@@ -1,4 +1,5 @@
 import { postRequest } from 'src/lib/fetch';
+import { getProfile, resetProfile } from '../profile';
 
 async function signup({ firstName, lastName, email, password }) {
   try {
@@ -23,6 +24,7 @@ async function login(email, pwd) {
       body: { email: email, password: pwd },
     });
     if (response.isSuccess) {
+      await getProfile();
       return response;
     }
     throw response.error;
@@ -32,4 +34,19 @@ async function login(email, pwd) {
   }
 }
 
-export { login, signup };
+async function logout() {
+  try {
+    const response = await postRequest({
+      url: 'api/logout',
+    });
+    if (response.isSuccess) {
+      resetProfile();
+      return true;
+    }
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
+export { login, signup, logout };

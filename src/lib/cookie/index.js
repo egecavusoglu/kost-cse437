@@ -36,6 +36,19 @@ function setAuthCookie(res, token) {
 }
 
 /**
+ * Resets http only auth-token cookie in the outgoing response
+ * @param {*} res response object
+ */
+function resetAuthCookie(res) {
+  setCookie(res, AUTH_COOKIE_KEY, ``, {
+    httpOnly: true,
+    path: '/',
+    sameSite: 'Strict',
+    secure: process.env.NODE_ENV === 'production',
+  });
+}
+
+/**
  * extract the auth cookie from the incoming request cookies.
  * @param {*} req
  * @returns
@@ -45,4 +58,4 @@ function getAuthCookie(req) {
   return token;
 }
 
-export { setCookie, setAuthCookie, getAuthCookie };
+export { setCookie, setAuthCookie, resetAuthCookie, getAuthCookie };

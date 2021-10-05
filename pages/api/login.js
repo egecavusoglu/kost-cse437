@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { generateAccessToken } from 'src/lib/jwt';
 import { setAuthCookie } from 'src/lib/cookie';
-
+import { prisma } from 'src/lib/prisma';
 /**
  * @endpoint /login
  * @post
@@ -49,5 +49,3 @@ async function checkPassword(pwd, hashedPwd) {
   }
   return await bcrypt.compare(pwd, hashedPwd);
 }
-
-export { checkPassword };
