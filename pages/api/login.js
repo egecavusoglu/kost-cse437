@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt';
 import { generateAccessToken } from 'src/lib/jwt';
 import { setAuthCookie } from 'src/lib/cookie';
 import { prisma } from 'src/lib/prisma';
+import { stringifyError } from 'src/lib/error';
+
 /**
  * @endpoint /login
  * @post
@@ -39,7 +41,7 @@ export default async function handler(req, res) {
     }
     res.status(404).json({ isSuccess: false, error: 'Route not found!' });
   } catch (err) {
-    res.status(400).json({ isSuccess: false, error: err.message });
+    res.status(400).json({ isSuccess: false, error: stringifyError(err) });
   }
 }
 

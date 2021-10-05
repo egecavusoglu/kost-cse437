@@ -1,9 +1,10 @@
+import { stringifyError } from 'src/lib/error';
 import { authenticationMiddleware } from 'src/lib/jwt';
 import { runMiddleware } from 'src/lib/middleware';
 import { prisma } from 'src/lib/prisma';
+
 /**
  * @endpoint /profile
- *
  * @get returns the profile information of the user if they have valid auth cookie.
  */
 
@@ -22,9 +23,6 @@ export default async function handler(req, res) {
     }
     res.status(404).json({ isSuccess: false, error: 'Route not found!' });
   } catch (err) {
-    console.error(err);
-    res
-      .status(400)
-      .json({ isSuccess: false, error: JSON.stringify(err, Object.getOwnPropertyNames(err)) });
+    res.status(400).json({ isSuccess: false, error: stringifyError(err) });
   }
 }

@@ -1,4 +1,6 @@
 import { resetAuthCookie } from 'src/lib/cookie';
+import { stringifyError } from 'src/lib/error';
+
 /**
  * @endpoint /logout
  * Logs out the user by clearing the httpOnly token cookie.
@@ -14,6 +16,6 @@ export default async function handler(req, res) {
     }
     res.status(404).json({ isSuccess: false, error: 'Route not found!' });
   } catch (err) {
-    res.status(400).json({ isSuccess: false, error: err.message });
+    res.status(400).json({ isSuccess: false, error: stringifyError(err) });
   }
 }
