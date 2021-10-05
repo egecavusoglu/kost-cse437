@@ -40,11 +40,11 @@ function setAuthCookie(res, token) {
  * @param {*} res response object
  */
 function resetAuthCookie(res) {
-  setCookie(res, AUTH_COOKIE_KEY, ``, {
+  setCookie(res, AUTH_COOKIE_KEY, '', {
     httpOnly: true,
     path: '/',
     sameSite: 'Strict',
-    secure: false,
+    secure: process.env.NODE_ENV === 'production',
   });
 }
 

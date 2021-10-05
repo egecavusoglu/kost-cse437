@@ -1,7 +1,4 @@
-import bcrypt from 'bcrypt';
-import { generateAccessToken } from 'src/lib/jwt';
-import { resetAuthCookie, setAuthCookie } from 'src/lib/cookie';
-import { prisma } from 'src/lib/prisma';
+import { resetAuthCookie } from 'src/lib/cookie';
 /**
  * @endpoint /logout
  * Logs out the user by clearing the httpOnly token cookie.

@@ -1,5 +1,6 @@
 import { authenticationMiddleware } from 'src/lib/jwt';
 import { runMiddleware } from 'src/lib/middleware';
+import { prisma } from 'src/lib/prisma';
 /**
  * @endpoint /profile
  *
