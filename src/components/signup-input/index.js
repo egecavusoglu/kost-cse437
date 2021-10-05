@@ -11,6 +11,7 @@ import {
   Text,
   HStack,
   useToast,
+  Divider,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import Link from 'src/components/link';
@@ -128,7 +129,7 @@ const LoginInput = ({ ...props }) => {
               isRequired={true}
             />
           </FormControl>
-          <Stack d="flex" flexDirection={'column'} spacing={4} alignItems="center">
+          <Stack d="flex" flexDirection={'column'} spacing={4} py={2} alignItems="center">
             <Button
               type="submit"
               w={'50%'}
@@ -138,6 +139,7 @@ const LoginInput = ({ ...props }) => {
               isDisabled={loading}>
               Sign Up
             </Button>
+            <Divider my={2} />
             <Text color="gray.600">
               Already have an account? <Link to="/login">Log in</Link>
             </Text>

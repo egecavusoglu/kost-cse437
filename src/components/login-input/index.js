@@ -10,6 +10,7 @@ import {
   Heading,
   Text,
   useToast,
+  Divider,
 } from '@chakra-ui/react';
 import Link from 'src/components/link';
 import Logo from 'src/components/logo';
@@ -83,7 +84,7 @@ const LoginInput = ({ ...props }) => {
             <FormLabel color="gray.700">Password</FormLabel>
             <Input type="password" onChange={(e) => setPassword(e.target.value)} value={password} />
           </FormControl>
-          <Stack d="flex" flexDirection={'column'} spacing={4} alignItems="center">
+          <Stack d="flex" flexDirection={'column'} spacing={4} py={2} alignItems="center">
             <Button
               w={'50%'}
               size="md"
@@ -93,7 +94,7 @@ const LoginInput = ({ ...props }) => {
               type="submit">
               Log In
             </Button>
-
+            <Divider my={2} />
             <Text color="gray.600">
               Don&apos;t have an account? <Link to="/signup">Sign up</Link>
             </Text>
