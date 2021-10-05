@@ -44,7 +44,7 @@ function resetAuthCookie(res) {
     httpOnly: true,
     path: '/',
     sameSite: 'Strict',
-    secure: process.env.NODE_ENV === 'production',
+    secure: false,
   });
 }
 
