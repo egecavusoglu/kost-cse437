@@ -7,19 +7,30 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettify": "npx prettier --write '**/*.js'"
+    "prettify": "npx prettier --write '**/*.js'",
+    "update-prisma": "npx prisma db push && npx prisma generate",
+    "prisma-ui": "npx prisma studio"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^1.0.15",
     "@chakra-ui/react": "^1.6.8",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@prisma/client": "^3.1.1",
+    "bcrypt": "^5.0.1",
+    "cookie": "^0.4.1",
+    "dotenv": "^10.0.0",
     "framer-motion": "^4",
+    "jsonwebtoken": "^8.5.1",
     "next": "11.1.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "serialize-error": "^8.1.0",
+    "zustand": "^3.5.12"
   },
   "devDependencies": {
     "eslint": "7.32.0",
-    "eslint-config-next": "11.1.2"
+    "eslint-config-next": "11.1.2",
+    "prisma": "3.1.1"
   }
 }
