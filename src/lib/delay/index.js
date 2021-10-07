@@ -16,7 +16,6 @@ const waitForAtLeast = async (fn, timeout) => {
     setTimeout(() => {
       timerResolved = true;
       if (fnResolved) {
-        console.log('TIMER RESOLVED');
         resolve(fnResult);
       }
     }, timeout);
@@ -26,7 +25,6 @@ const waitForAtLeast = async (fn, timeout) => {
         fnResolved = true;
         fnResult = val;
         if (timerResolved) {
-          console.log('FN RESOLVED');
           resolve(val);
         }
       })
