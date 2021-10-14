@@ -1,4 +1,4 @@
-import { getRequest, postRequest } from 'src/lib/fetch';
+import { getRequest, useQuery, postRequest } from 'src/lib/fetch';
 
 async function createOrganisation({ name, description, plan }) {
   try {
@@ -39,4 +39,13 @@ async function getOrganisations() {
   }
 }
 
-export { createOrganisation, getOrganisations };
+function useOrgs() {
+  const { data, error } = useQuery('api/orgs');
+  return {
+    orgs: data?.data,
+    loading: !error && !data,
+    error,
+  };
+}
+
+export { createOrganisation, getOrganisations, useOrgs };

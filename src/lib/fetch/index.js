@@ -1,3 +1,4 @@
+import useSWR from 'swr';
 const SHARED_HEADERS = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
@@ -22,4 +23,10 @@ function postRequest({ url, body = {}, headers }) {
     .catch((err) => err);
 }
 
-export { getRequest, postRequest };
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+function useQuery(url) {
+  return useSWR(url, fetcher);
+}
+
+export { getRequest, postRequest, useQuery };
