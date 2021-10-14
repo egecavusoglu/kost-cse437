@@ -21,7 +21,6 @@ model User {
   firstName String
   lastName String
   organisations UsersOnOrganisations[]
-  adminOf Organisation[]
 }
 
 // Organisation Model
@@ -31,8 +30,6 @@ model Organisation {
   name String @unique
   description String
   plan SubscriptionPlan @default(FREE)
-  admin User @relation(fields: [adminId], references: [id])
-  adminId Int 
   members UsersOnOrganisations[]
   projects Project[]
 }
@@ -49,6 +46,7 @@ model UsersOnOrganisations {
   userId Int
   organisation Organisation @relation(fields: [organisationId], references: [id])
   organisationId Int
+  isAdmin Boolean @default(false)
   @@id([userId, organisationId])
 }
 

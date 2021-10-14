@@ -17,7 +17,7 @@ import { useRouter } from 'next/router';
 import Link from 'src/components/link';
 import Logo from 'src/components/logo';
 import { validateEmail } from 'src/lib/email';
-import { signup } from 'src/requests/auth';
+import { signup, login } from 'src/requests/auth';
 
 const LoginInput = ({ ...props }) => {
   const router = useRouter();
@@ -49,14 +49,14 @@ const LoginInput = ({ ...props }) => {
     setLoading(false);
 
     if (signupResult) {
-      return toast({
+      toast({
         title: 'Account created.',
-        description: "We've created your account for you.",
+        description: "We're logging you in.",
         status: 'success',
         duration: 3000,
         isClosable: true,
-        onCloseComplete: () => router.push('/login'),
       });
+      return logUserIn(email, password);
     }
     toast({
       title: 'Oops.',
@@ -66,6 +66,26 @@ const LoginInput = ({ ...props }) => {
       isClosable: false,
     });
   };
+
+  const logUserIn = async (email, pwd) => {
+    setLoading(true);
+    const response = await login(email, pwd);
+    setLoading(false);
+
+    if (response) {
+      router.push('/');
+      return;
+    }
+
+    toast({
+      title: 'Oops.',
+      description: "We've encountered an error logging you in.",
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    });
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <Box rounded="md" w="sm" h="min" shadow="lg" overflow="hidden">

@@ -20,7 +20,6 @@ export default async function handler(req, res) {
           name: name,
           description: description,
           plan: plan,
-          adminId: id,
           members: {
             create: [
               {
@@ -29,6 +28,7 @@ export default async function handler(req, res) {
                     id: id,
                   },
                 },
+                isAdmin: true,
               },
             ],
           },

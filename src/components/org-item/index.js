@@ -1,19 +1,34 @@
-import { Center, useDisclosure, VStack, Box, Flex, Spacer, Badge, Text } from '@chakra-ui/react';
+import {
+  Center,
+  useDisclosure,
+  VStack,
+  Box,
+  Flex,
+  Spacer,
+  Badge,
+  Text,
+  Skeleton,
+  SkeletonText,
+} from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import AddOrgModal from '../add-org-modal';
-export default function OrgItem({ props }) {
+import { formatDate } from 'src/lib/date';
+export default function OrgItem({ data = {}, ...props }) {
+  const formattedDate = formatDate(data.createdAt);
   return (
     <Container>
-      <Box flex="1">
+      <Box flex="1" w="full">
         <Text fontWeight="semibold" mb={2}>
-          Organization Name
+          {data.name}
         </Text>
-        <Text fontSize="sm">This is some org description</Text>
+        <Text fontSize="sm" textAlign="left">
+          {data.description}
+        </Text>
       </Box>
 
       <Flex justifyContent="space-between" w="full">
-        <Text fontSize="xs">created 12/01/2021</Text>
-        <Badge colorScheme="green">Free</Badge>
+        <Badge colorScheme="green">{data.plan}</Badge>
+        <Text fontSize="xs">created {formattedDate}</Text>
       </Flex>
     </Container>
   );
@@ -29,13 +44,15 @@ function Container({ children, ...props }) {
       shadow="md"
       rounded="lg"
       p={3}
-      _hover={{ shadow: 'lg' }}
+      _hover={{ shadow: 'xl' }}
       transitionProperty="all"
       transitionDuration={'200ms'}>
       {children}
     </VStack>
   );
 }
+
+function InnerContent() {}
 
 function AddOrgItem() {
   const iconSize = 10;
@@ -62,4 +79,15 @@ function AddOrgItem() {
     </>
   );
 }
-export { AddOrgItem };
+
+function OrgItemSkeleton() {
+  return (
+    <Container>
+      <Box w="full" h="full">
+        <Skeleton height="20px" />
+        <SkeletonText mt="4" noOfLines={2} spacing="4" />
+      </Box>
+    </Container>
+  );
+}
+export { AddOrgItem, OrgItemSkeleton };

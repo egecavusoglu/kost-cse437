@@ -16,6 +16,7 @@ import {
   Select,
   Text,
   Badge,
+  useToast,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { createOrganisation } from 'src/requests/organisation';
@@ -28,14 +29,18 @@ export default function AddOrgModal({ isOpen, onOpen, onClose }) {
         <ModalHeader color="gray.700">Add New Organisation</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <AddOrgForm />
+          <AddOrgForm onClose={onClose} />
         </ModalBody>
       </ModalContent>
     </Modal>
   );
 }
 
-function AddOrgForm({ ...props }) {
+function AddOrgForm({
+  onClose = () => {}, // Callback function invoked after a successfull create.
+  ...props
+}) {
+  const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState();
   const [desc, setDesc] = useState();
@@ -53,9 +58,29 @@ function AddOrgForm({ ...props }) {
 
     if (!res) {
       // Error creating
-      return;
+      return toast({
+        title: 'Oops.',
+        description: "We've encountered an error creating organisation.",
+        status: 'error',
+        duration: 3000,
+        isClosable: false,
+      });
     }
+
+    toast({
+      title: 'Organisation created.',
+      description: 'You are all set!',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    });
+    handleSuccessfulCreate();
   };
+
+  const handleSuccessfulCreate = () => {
+    onClose();
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <Stack pb={4} px={5} bg="white" spacing={5}>

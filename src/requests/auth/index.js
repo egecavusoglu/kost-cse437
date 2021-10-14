@@ -9,7 +9,7 @@ async function signup({ firstName, lastName, email, password }) {
       body: { firstName: firstName, lastName: lastName, email: email, password: password },
     });
     if (response.isSuccess) {
-      return response;
+      return true;
     }
     throw response.error;
   } catch (err) {
