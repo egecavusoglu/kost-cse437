@@ -31,7 +31,7 @@ model Organisation {
   description String
   plan SubscriptionPlan @default(FREE)
   members UsersOnOrganisations[]
-  projects Project[]
+  projects Product[]
 }
 
 // Subscription plan of the organisation
@@ -50,11 +50,12 @@ model UsersOnOrganisations {
   @@id([userId, organisationId])
 }
 
-// Project Model
-model Project {
+// Product Model
+model Product {
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
   name String
+  description String
   organisation Organisation @relation(fields: [organisationId], references: [id])
   organisationId Int
   amount Float

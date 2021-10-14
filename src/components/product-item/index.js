@@ -4,18 +4,16 @@ import {
   VStack,
   Box,
   Flex,
-  Spacer,
   Badge,
   Text,
   Skeleton,
   SkeletonText,
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
-import AddOrgModal from '../add-org-modal';
-import { formatDate } from 'src/lib/date';
+import AddProductModal from '../add-product-modal';
 import Link from 'src/components/link';
-export default function OrgItem({ data = {}, ...props }) {
-  const formattedDate = formatDate(data.createdAt);
+
+export default function ProductItem({ data = {}, ...props }) {
   return (
     <Container>
       <Box flex="1" w="full">
@@ -53,20 +51,20 @@ function Container({ children, ...props }) {
   );
 }
 
-function AddOrgItem() {
+function AddProductItem() {
   const iconSize = 10;
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const launchAddOrg = () => {
+  const launchAddModal = () => {
     onOpen();
   };
 
   return (
     <>
       <Container>
-        <Box w="full" h="full" as="button" textAlign="left" onClick={launchAddOrg}>
+        <Box w="full" h="full" as="button" textAlign="left" onClick={launchAddModal}>
           <Box flex="1" w="full">
             <Text color="gray.700" fontWeight="medium">
-              Add Organisation
+              Add Product
             </Text>
           </Box>
           <Center h="full" w="full">
@@ -74,12 +72,12 @@ function AddOrgItem() {
           </Center>
         </Box>
       </Container>
-      <AddOrgModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+      <AddProductModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </>
   );
 }
 
-function OrgItemSkeleton() {
+function ProductItemSkeleton() {
   return (
     <Container>
       <Box w="full" h="full">
@@ -89,4 +87,4 @@ function OrgItemSkeleton() {
     </Container>
   );
 }
-export { AddOrgItem, OrgItemSkeleton };
+export { AddProductItem, ProductItemSkeleton };

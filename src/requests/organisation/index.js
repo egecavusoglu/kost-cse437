@@ -40,7 +40,7 @@ async function getOrganisations() {
 }
 
 function useOrgs() {
-  const { data, error } = useQuery('api/orgs');
+  const { data, error } = useQuery('/api/orgs');
   return {
     orgs: data?.data,
     loading: !error && !data,
@@ -48,4 +48,13 @@ function useOrgs() {
   };
 }
 
-export { createOrganisation, getOrganisations, useOrgs };
+function useOrgDetails(orgId) {
+  const { data, error } = useQuery(`/api/orgs/${orgId}`);
+  return {
+    org: data?.data,
+    loading: !error && !data,
+    error,
+  };
+}
+
+export { createOrganisation, getOrganisations, useOrgs, useOrgDetails };

@@ -1,14 +1,36 @@
 import { HStack, Text, Select } from '@chakra-ui/react';
-export default function OrgSelector({ props }) {
+import { useOrgs } from 'src/requests/organisation';
+import { useRouter } from 'next/router';
+
+export default function OrgSelector({ value, ...props }) {
+  const router = useRouter();
+  const orgId = router.query.id;
+  const { orgs, loading, error } = useOrgs();
+
+  const handleChange = (e) => {
+    const oid = e.target.value;
+    router.push(`/org/${oid}`);
+  };
   return (
-    <HStack bg="white" px={12} py={2} spacing={4}>
-      <Text fontWeight="medium" fontSize="sm">
+    <HStack bg="white" px={12} py={2} spacing={4} borderBottom="2px solid" borderColor="gray.300">
+      <Text fontWeight="semibold" color="gray.600" fontSize="sm">
         Organisation
       </Text>
-      <Select placeholder="Select organisation" size="sm" bg="white" w="min" minW={48}>
-        <option value="option1">Option 1Option 1Option 1Option 1Option 1</option>
-        <option value="option2">Option 2</option>
-        <option value="option3">Option 3</option>
+      <Select
+        fontWeight="semibold"
+        color="gray.700"
+        placeholder="Select organisation"
+        size="sm"
+        bg="white"
+        w="min"
+        minW={48}
+        value={orgId}
+        onChange={handleChange}>
+        {orgs?.map((org) => (
+          <option key={org.id} value={org.id}>
+            {org.name}
+          </option>
+        ))}
       </Select>
     </HStack>
   );
