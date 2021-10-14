@@ -21,6 +21,7 @@ model User {
   firstName String
   lastName String
   organisations UsersOnOrganisations[]
+  adminOf Organisation[]
 }
 
 // Organisation Model
@@ -29,8 +30,10 @@ model Organisation {
   createdAt DateTime @default(now())
   name String @unique
   description String
-  admins UsersOnOrganisations[]
   plan SubscriptionPlan @default(FREE)
+  admin User @relation(fields: [adminId], references: [id])
+  adminId Int 
+  members UsersOnOrganisations[]
   projects Project[]
 }
 

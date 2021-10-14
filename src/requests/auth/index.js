@@ -1,5 +1,6 @@
 import { postRequest } from 'src/lib/fetch';
 import { getProfile, resetProfile } from '../profile';
+import Router from 'next/router';
 
 async function signup({ firstName, lastName, email, password }) {
   try {
@@ -41,6 +42,7 @@ async function logout() {
     });
     if (response.isSuccess) {
       resetProfile();
+      Router.push('/welcome');
       return true;
     }
   } catch (err) {

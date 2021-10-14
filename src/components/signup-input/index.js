@@ -55,7 +55,7 @@ const LoginInput = ({ ...props }) => {
         status: 'success',
         duration: 3000,
         isClosable: true,
-        onCloseComplete: () => router.push('/'),
+        onCloseComplete: () => router.push('/login'),
       });
     }
     toast({
