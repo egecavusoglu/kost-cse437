@@ -15,8 +15,53 @@ generator client {
 // User Model
 model User {
   id    Int     @id @default(autoincrement())
+  createdAt DateTime @default(now())
   email String  @unique
   hashedPassword String
   firstName String
   lastName String
+  organisations Organisation[]
 }
+
+// Organisation Model
+model Organisation {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  name String @unique
+  description String
+  admins User[] @relation(fields: [adminIds], references: [id])
+  adminIds Int[]
+  plan SubscriptionPlan @default(FREE)
+  projects Project[]
+}
+
+// Subscription plan of the organisation
+enum SubscriptionPlan {
+  FREE
+  PREMIUM
+}
+
+// Project Model
+model Project {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  name String
+  organisation Organisation @relation(fields: [organisationId], references: [id])
+  organisationId Int
+  amount Float
+  currency String
+  billingType BillingType @default(FREE)
+}
+
+// Billing type of the project. Can be fixed monthly cost, one time fixed cost or free.
+enum BillingType {
+  FREE // no cost associated with using the product
+  MONTHLY  // has a monthly fixed cost
+  FIXED // has a fixed cost that was paid once.
+}
+
+// Roles Model: Refers to the various roles in the org. like engineer, business dev, designer and etc.
+// model Role {
+//   id Int @id @default(autoincrement())
+
+// }
