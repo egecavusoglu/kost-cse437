@@ -20,7 +20,7 @@ model User {
   hashedPassword String
   firstName String
   lastName String
-  organisations Organisation[]
+  organisations UsersOnOrganisations[]
 }
 
 // Organisation Model
@@ -29,8 +29,7 @@ model Organisation {
   createdAt DateTime @default(now())
   name String @unique
   description String
-  admins User[] @relation(fields: [adminIds], references: [id])
-  adminIds Int[]
+  admins UsersOnOrganisations[]
   plan SubscriptionPlan @default(FREE)
   projects Project[]
 }
@@ -39,6 +38,15 @@ model Organisation {
 enum SubscriptionPlan {
   FREE
   PREMIUM
+}
+
+// Relation table to represent to m to n relation between users and organisations.
+model UsersOnOrganisations {
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  organisation Organisation @relation(fields: [organisationId], references: [id])
+  organisationId Int
+  @@id([userId, organisationId])
 }
 
 // Project Model
