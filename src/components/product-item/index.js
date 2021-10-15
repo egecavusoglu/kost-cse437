@@ -8,27 +8,32 @@ import {
   Text,
   Skeleton,
   SkeletonText,
+  HStack,
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import AddProductModal from '../add-product-modal';
 import Link from 'src/components/link';
-
+import { getCurrencySymbol } from 'src/lib/currency';
 export default function ProductItem({ data = {}, ...props }) {
+  const formattedAmount = `${getCurrencySymbol(data.currency)}${data.amount}`;
   return (
     <Container>
-      <Box flex="1" w="full">
-        <Link to={`/org/${data.id}`} fontWeight="semibold" mb={2}>
+      <Box w="full" flex="1">
+        <Text fontWeight="semibold" mb={2} color="secondary.600">
           {data.name}
-        </Link>
+        </Text>
+
         <Text fontSize="sm" textAlign="left">
           {data.description}
         </Text>
       </Box>
 
-      <Flex justifyContent="space-between" w="full">
-        <Badge colorScheme="green">{data.plan}</Badge>
-        <Text fontSize="xs">created {formattedDate}</Text>
-      </Flex>
+      <HStack w="full" justifyContent="start" alignItems="center">
+        <Text color="primary.500" fontSize="3xl" fontWeight="semibold">
+          {formattedAmount}
+        </Text>
+        <Badge colorScheme="green">{data.billingPeriod}</Badge>
+      </HStack>
     </Container>
   );
 }
@@ -51,7 +56,7 @@ function Container({ children, ...props }) {
   );
 }
 
-function AddProductItem() {
+function AddProductItem({ orgId }) {
   const iconSize = 10;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const launchAddModal = () => {
@@ -72,7 +77,7 @@ function AddProductItem() {
           </Center>
         </Box>
       </Container>
-      <AddProductModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+      <AddProductModal orgId={orgId} isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </>
   );
 }

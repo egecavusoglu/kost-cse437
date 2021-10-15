@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { createOrganisation } from 'src/requests/organisation';
-
+import { useSWRConfig } from 'swr';
 export default function AddOrgModal({ isOpen, onOpen, onClose }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -40,6 +40,7 @@ function AddOrgForm({
   onClose = () => {}, // Callback function invoked after a successfull create.
   ...props
 }) {
+  const { mutate } = useSWRConfig();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState();
@@ -74,6 +75,7 @@ function AddOrgForm({
       duration: 3000,
       isClosable: true,
     });
+    mutate(`/api/orgs`);
     handleSuccessfulCreate();
   };
 

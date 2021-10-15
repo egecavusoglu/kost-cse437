@@ -1,14 +1,15 @@
 import Navbar from 'src/components/navbar';
 import { useRouter } from 'next/router';
-import { Box, Heading, Wrap, WrapItem } from '@chakra-ui/react';
+import { Box, Grid, Heading, Wrap, WrapItem } from '@chakra-ui/react';
 import OrgSelector from 'src/components/org-selector';
 import { useOrgDetails } from 'src/requests/organisation';
-import { AddProductItem, ProductItemSkeleton } from 'src/components/product-item';
-
+import ProductItem, { AddProductItem, ProductItemSkeleton } from 'src/components/product-item';
+import { useProducts } from 'src/requests/products';
 export default function OrgDetails({ props }) {
   const router = useRouter();
   const orgId = router.query.id;
   const { org, loading, error } = useOrgDetails(orgId);
+  const { products } = useProducts(orgId);
   return (
     <div>
       <Navbar />
@@ -17,20 +18,36 @@ export default function OrgDetails({ props }) {
         <Heading color="secondary.600" as="h2" fontSize="xl">
           Products
         </Heading>
-        <Wrap my={8} spacing={4} justifyContent="space-evenly">
+        <Grid
+          templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)']}
+          autoColumns
+          gap={6}
+          p={8}>
+          <AddProductItem orgId={orgId} />
           {loading ? (
             <ProductItemSkeleton />
-          ) : // orgs?.map((org) => (
-          //   <WrapItem key={org.id}>
-          //     <ProductItem key={org.id} data={org} />
-          //   </WrapItem>
-          // ))
-          null}
-          <WrapItem>
-            <AddProductItem />
-          </WrapItem>
-        </Wrap>
+          ) : (
+            products?.map((p) => (
+              <WrapItem key={p.id}>
+                <ProductItem key={p.id} data={p} />
+              </WrapItem>
+            ))
+          )}
+        </Grid>
       </Box>
     </div>
   );
+}
+
+{
+  /* <Wrap my={8} spacing={4} justifyContent="space-evenly">
+          <WrapItem>
+            <AddProductItem orgId={orgId} />
+          </WrapItem>
+          {loading ? (
+            <ProductItemSkeleton />
+          ) : (
+            
+          )}
+        </Wrap> */
 }

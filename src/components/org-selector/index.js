@@ -19,7 +19,6 @@ export default function OrgSelector({ value, ...props }) {
       <Select
         fontWeight="semibold"
         color="gray.700"
-        placeholder="Select organisation"
         size="sm"
         bg="white"
         w="min"

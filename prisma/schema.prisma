@@ -60,11 +60,11 @@ model Product {
   organisationId Int
   amount Float
   currency String
-  billingType BillingType @default(FREE)
+  billingPeriod BILLING_PERIOD @default(FREE)
 }
 
 // Billing type of the project. Can be fixed monthly cost, one time fixed cost or free.
-enum BillingType {
+enum BILLING_PERIOD {
   FREE // no cost associated with using the product
   MONTHLY  // has a monthly fixed cost
   FIXED // has a fixed cost that was paid once.
