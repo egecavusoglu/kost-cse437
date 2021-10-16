@@ -44,7 +44,8 @@ function Container({ children, ...props }) {
       {...props}
       bg="white"
       h={56}
-      w={52}
+      w="full"
+      minWidth={52}
       shadow="md"
       rounded="lg"
       p={3}

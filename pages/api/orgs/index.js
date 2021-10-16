@@ -5,7 +5,13 @@ import { prisma } from 'src/lib/prisma';
 
 /**
  * @endpoint /orgs
+ * @authentication all routes require auth-token cookie
  * @post creates new organisation
+ * body: {
+ *    name,
+ *    description,
+ *    plan
+ * }
  * @get returns all organisations user is a member of
  */
 
@@ -50,6 +56,7 @@ export default async function handler(req, res) {
       });
       return res.status(200).json({ isSuccess: true, data: orgs });
     }
+
     res.status(404).json({ isSuccess: false, error: 'Route not found!' });
   } catch (err) {
     res.status(400).json({ isSuccess: false, error: stringifyError(err) });

@@ -23,10 +23,20 @@ function postRequest({ url, body = {}, headers }) {
     .catch((err) => err);
 }
 
+function deleteRequest({ url, body = {}, headers }) {
+  return fetch(url, {
+    headers: { headers, ...SHARED_HEADERS },
+    method: 'DELETE',
+    body: JSON.stringify(body),
+  })
+    .then((r) => r.json())
+    .catch((err) => err);
+}
+
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 function useQuery(url) {
   return useSWR(url, fetcher);
 }
 
-export { getRequest, postRequest, useQuery };
+export { getRequest, postRequest, deleteRequest, useQuery };

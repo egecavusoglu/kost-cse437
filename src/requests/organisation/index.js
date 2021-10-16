@@ -1,4 +1,4 @@
-import { getRequest, useQuery, postRequest } from 'src/lib/fetch';
+import { getRequest, useQuery, postRequest, deleteRequest } from 'src/lib/fetch';
 
 async function createOrganisation({ name, description, plan }) {
   try {
@@ -23,7 +23,6 @@ async function createOrganisation({ name, description, plan }) {
 /**
  * @returns the orgs current user is a member of.
  */
-
 async function getOrganisations() {
   try {
     const res = await getRequest({
@@ -57,4 +56,19 @@ function useOrgDetails(orgId) {
   };
 }
 
-export { createOrganisation, getOrganisations, useOrgs, useOrgDetails };
+async function deleteOrganisation(orgId) {
+  try {
+    const res = await deleteRequest({
+      url: `/api/orgs/${orgId}`,
+    });
+
+    if (res.isSuccess) {
+      return true;
+    }
+    throw res.error;
+  } catch (err) {
+    return false;
+  }
+}
+
+export { createOrganisation, getOrganisations, useOrgs, useOrgDetails, deleteOrganisation };
