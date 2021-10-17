@@ -24,17 +24,11 @@ function authenticationMiddleware(req, res, next) {
   const header = getAuthCookie(req);
   const token = header && header.split(' ')[1];
   if (!token) {
-    return res.status(401).json({
-      isSuccess: false,
-      error: 'No auth cookie is found.',
-    });
+    return res.redirect('/welcome');
   }
   jwt.verify(token, JWT_TOKEN_SECRET, (err, user) => {
     if (err) {
-      return res.status(403).json({
-        isSuccess: false,
-        error: 'Authorization failed.',
-      });
+      return res.redirect('/welcome');
     }
     req.user = user;
     next();
