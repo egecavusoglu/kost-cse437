@@ -90,7 +90,7 @@ const LoginInput = ({ ...props }) => {
               size="md"
               mx="auto"
               colorScheme="primary"
-              isDisabled={loading}
+              isLoading={loading}
               type="submit">
               Log In
             </Button>

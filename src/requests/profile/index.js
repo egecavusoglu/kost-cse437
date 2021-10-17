@@ -7,7 +7,7 @@ import { useAuthStore } from 'src/store';
  */
 async function getProfile() {
   try {
-    const response = await getRequest({ url: 'api/profile' });
+    const response = await getRequest({ url: '/api/profile' });
     if (response.isSuccess) {
       // set user profile to global state.
       useAuthStore.setState({
