@@ -1,4 +1,4 @@
-import { useQuery, postRequest } from 'src/lib/fetch';
+import { useQuery, postRequest, deleteRequest } from 'src/lib/fetch';
 
 async function createProduct({
   name,
@@ -32,4 +32,18 @@ function useProducts(orgId) {
   };
 }
 
-export { createProduct, useProducts };
+async function deleteProduct(productId) {
+  try {
+    const res = await deleteRequest({
+      url: `/api/products/${productId}`,
+    });
+    if (res.isSuccess) {
+      return true;
+    }
+    throw res.error;
+  } catch (err) {
+    return false;
+  }
+}
+
+export { createProduct, useProducts, deleteProduct };

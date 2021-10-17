@@ -31,7 +31,7 @@ model Organisation {
   description String
   plan SubscriptionPlan @default(FREE)
   members UsersOnOrganisations[]
-  projects Product[]
+  products Product[]
 }
 
 // Subscription plan of the organisation

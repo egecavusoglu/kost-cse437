@@ -9,13 +9,47 @@ import {
   Skeleton,
   SkeletonText,
   HStack,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  useToast,
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import AddProductModal from '../add-product-modal';
-import Link from 'src/components/link';
 import { getCurrencySymbol } from 'src/lib/currency';
+import IconWrapper from '../icon-wrapper';
+import { deleteProduct } from 'src/requests/products';
+import { useSWRConfig } from 'swr';
+import { DotsHorizontalIcon } from '@heroicons/react/solid';
+
 export default function ProductItem({ data = {}, ...props }) {
+  const { mutate } = useSWRConfig();
+  const toast = useToast();
   const formattedAmount = `${getCurrencySymbol(data.currency)}${data.amount}`;
+
+  const handleDeleteProduct = async () => {
+    const result = await deleteProduct(data.id);
+    if (!result) {
+      return toast({
+        title: 'Oops.',
+        description: "We've encountered an error deleting product.",
+        status: 'error',
+        duration: 3000,
+        isClosable: false,
+      });
+    }
+    toast({
+      title: 'Product deleted!',
+      description: 'We hope that was intended mate.',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    });
+    mutate(`/api/orgs/${data.organisationId}/products`);
+  };
+
   return (
     <Container>
       <Box w="full" flex="1">
@@ -34,6 +68,18 @@ export default function ProductItem({ data = {}, ...props }) {
         </Text>
         <Badge colorScheme="green">{data.billingPeriod}</Badge>
       </HStack>
+      <Flex justifyContent="end" w="full">
+        <Menu>
+          <MenuButton as={Button} size="xs" variant="ghost">
+            <IconWrapper icon={DotsHorizontalIcon} color="gray.400" boxSize={5} />
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={handleDeleteProduct} color="red.400">
+              Delete Product
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Flex>
     </Container>
   );
 }

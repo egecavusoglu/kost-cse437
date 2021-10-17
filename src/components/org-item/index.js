@@ -31,7 +31,7 @@ export default function OrgItem({ data = {}, ...props }) {
   const organizationId = data.id;
 
   const handleDeleteOrg = async () => {
-    const result = await deleteOrganisation(data.id);
+    const result = await deleteOrganisation(organizationId);
     if (!result) {
       return toast({
         title: 'Oops.',
