@@ -92,7 +92,7 @@ function Container({ children, ...props }) {
       shadow="md"
       rounded="lg"
       p={3}
-      _hover={{ shadow: 'xl' }}
+      _hover={{ shadow: 'lg' }}
       transitionProperty="all"
       transitionDuration={'200ms'}>
       {children}
