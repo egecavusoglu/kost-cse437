@@ -56,9 +56,11 @@ export default function OrgItem({ data = {}, ...props }) {
         <Link to={`/org/${data.id}`} fontWeight="semibold" mb={2}>
           {data.name}
         </Link>
-        <Text fontSize="sm" textAlign="left" color="gray.700">
-          {data.description}
-        </Text>
+        <Box maxH={24} w="full" overflow="hidden">
+          <Text fontSize="sm" textAlign="left" color="gray.700" noOfLines={4}>
+            {data.description}
+          </Text>
+        </Box>
       </Box>
 
       <Flex justifyContent="space-between" w="full">
@@ -85,6 +87,7 @@ function Container({ children, ...props }) {
   return (
     <VStack
       {...props}
+      overflow="hidden"
       bg="white"
       h={56}
       w="full"
