@@ -56,10 +56,11 @@ export default function ProductItem({ data = {}, ...props }) {
         <Text fontWeight="semibold" mb={2} color="secondary.600">
           {data.name}
         </Text>
-
-        <Text fontSize="sm" textAlign="left">
-          {data.description}
-        </Text>
+        <Box maxH={24} w="full" overflow="hidden">
+          <Text fontSize="sm" textAlign="left" color="gray.700" noOfLines={4}>
+            {data.description}
+          </Text>
+        </Box>
       </Box>
 
       <HStack w="full" justifyContent="start" alignItems="center">
@@ -87,6 +88,7 @@ export default function ProductItem({ data = {}, ...props }) {
 function Container({ children, ...props }) {
   return (
     <VStack
+      overflow="hidden"
       {...props}
       bg="white"
       h={56}

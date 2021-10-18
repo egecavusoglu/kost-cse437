@@ -31,7 +31,30 @@ import { logout } from 'src/requests/auth';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
-
+  const userLoggedIn = useAuthStore((s) => s.isLoggedIn);
+  const NAV_ITEMS = userLoggedIn
+    ? [
+        //   {
+        //     label: 'Inspiration',
+        //     children: [
+        //       {
+        //         label: 'Explore Design Work',
+        //         subLabel: 'Trending Design to inspire you',
+        //         href: '#',
+        //       },
+        //       {
+        //         label: 'New & Noteworthy',
+        //         subLabel: 'Up-and-coming Designers',
+        //         href: '#',
+        //       },
+        //     ],
+        //   },
+        {
+          label: 'Organisations',
+          href: '/',
+        },
+      ]
+    : [];
   return (
     <Box>
       <Flex
@@ -66,7 +89,7 @@ export default function WithSubnavigation() {
           </CustomLink>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            <DesktopNav />
+            <DesktopNav navItems={NAV_ITEMS} />
           </Flex>
         </Flex>
 
@@ -76,7 +99,7 @@ export default function WithSubnavigation() {
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
+        <MobileNav navItems={NAV_ITEMS} />
       </Collapse>
     </Box>
   );
@@ -147,14 +170,14 @@ const ActionButtons = () => {
   );
 };
 
-const DesktopNav = () => {
+const DesktopNav = ({ navItems }) => {
   const linkColor = useColorModeValue('gray.200', 'gray.200');
   const linkHoverColor = useColorModeValue('white', 'white');
   const popoverContentBgColor = useColorModeValue('white', 'gray.800');
 
   return (
     <Stack direction={'row'} spacing={4}>
-      {NAV_ITEMS.map((navItem) => (
+      {navItems.map((navItem) => (
         <Box key={navItem.label}>
           <Popover trigger={'hover'} placement={'bottom-start'}>
             <PopoverTrigger>
@@ -225,10 +248,10 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
   );
 };
 
-const MobileNav = () => {
+const MobileNav = ({ navItems }) => {
   return (
     <Stack bg={useColorModeValue('white', 'gray.800')} p={4} display={{ md: 'none' }}>
-      {NAV_ITEMS.map((navItem) => (
+      {navItems.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
     </Stack>
@@ -282,25 +305,3 @@ const MobileNavItem = ({ label, children, href }) => {
     </Stack>
   );
 };
-
-const NAV_ITEMS = [
-  //   {
-  //     label: 'Inspiration',
-  //     children: [
-  //       {
-  //         label: 'Explore Design Work',
-  //         subLabel: 'Trending Design to inspire you',
-  //         href: '#',
-  //       },
-  //       {
-  //         label: 'New & Noteworthy',
-  //         subLabel: 'Up-and-coming Designers',
-  //         href: '#',
-  //       },
-  //     ],
-  //   },
-  {
-    label: 'Organisations',
-    href: '/',
-  },
-];
