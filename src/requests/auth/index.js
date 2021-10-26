@@ -5,7 +5,7 @@ import Router from 'next/router';
 async function signup({ firstName, lastName, email, password }) {
   try {
     const response = await postRequest({
-      url: 'api/signup',
+      url: '/api/signup',
       body: { firstName: firstName, lastName: lastName, email: email, password: password },
     });
     if (response.isSuccess) {
@@ -21,7 +21,7 @@ async function signup({ firstName, lastName, email, password }) {
 async function login(email, pwd) {
   try {
     const response = await postRequest({
-      url: 'api/login',
+      url: '/api/login',
       body: { email: email, password: pwd },
     });
     if (response.isSuccess) {
@@ -38,7 +38,7 @@ async function login(email, pwd) {
 async function logout() {
   try {
     const response = await postRequest({
-      url: 'api/logout',
+      url: '/api/logout',
     });
     if (response.isSuccess) {
       resetProfile();
