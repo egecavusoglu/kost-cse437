@@ -5,6 +5,9 @@ import OrgSelector from 'src/components/org-selector';
 import OrgItem, { AddOrgItem, OrgItemSkeleton } from 'src/components/org-item';
 import Navbar from 'src/components/navbar';
 import { useOrgs } from 'src/requests/organisation';
+
+/// Homepage dashboard where your organizations live in. 
+
 export default function Home() {
   const { orgs, loading, error } = useOrgs();
 
