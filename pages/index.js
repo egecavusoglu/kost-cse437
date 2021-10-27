@@ -18,6 +18,7 @@ export default function Home() {
         p={8}>
         <AddOrgItem />
         {loading ? <OrgItemSkeleton /> : orgs?.map((org) => <OrgItem key={org.id} data={org} />)}
+        {/* AI added this code! */}
       </Grid>
     </div>
   );
