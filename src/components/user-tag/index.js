@@ -65,13 +65,12 @@ function AddUserTag({ orgId, ...props }) {
     mutate(MEMBERS_API_URI(orgId));
     toast({
       title: 'Member added',
-      description: 'Your team just grow!',
+      description: 'Your team is growing!',
       status: 'success',
       duration: 3000,
       isClosable: true,
     });
     setEmail('');
-    setIsAdmin(false);
   };
   return (
     <>
@@ -83,7 +82,7 @@ function AddUserTag({ orgId, ...props }) {
         color="gray.600"
         fontWeight="medium"
         shadow="sm"
-        leftIcon={<AddIcon color="secondary.600" />}>
+        leftIcon={<AddIcon color="secondary.400" />}>
         Add Member
       </Button>
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
