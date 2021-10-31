@@ -42,6 +42,7 @@ export default function OrgSettings({ org, ...props }) {
               <Wrap py={4}>
                 {members?.map((m) => (
                   <UserTag
+                    key={m.userId}
                     name={`${m.user.firstName} ${m.user.lastName}`}
                     isAdmin={m.isAdmin}
                     isOwner={m.isOwner}
