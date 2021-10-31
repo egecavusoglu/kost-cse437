@@ -1,6 +1,6 @@
 import Navbar from 'src/components/navbar';
 import { useRouter } from 'next/router';
-import { Button, Flex, Box, Grid, Heading, Wrap, WrapItem } from '@chakra-ui/react';
+import { Button, Text, Flex, Box, Grid, Heading, Wrap, WrapItem } from '@chakra-ui/react';
 import OrgSelector from 'src/components/org-selector';
 import { useOrgDetails } from 'src/requests/organisation';
 import ProductItem, { AddProductItem, ProductItemSkeleton } from 'src/components/product-item';
@@ -24,6 +24,9 @@ export default function OrgDetails({ props }) {
           </Heading>
           <OrgSettings org={org} />
         </Flex>
+        <Box py={1} mb={6}>
+          <Text>{org?.description}</Text>
+        </Box>
         <Products />
       </Box>
     </div>
