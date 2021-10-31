@@ -16,19 +16,58 @@ import {
   Input,
   Switch,
   FormErrorMessage,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import { validateEmail } from 'src/lib/email';
 import { MEMBERS_API_URI, addMemberToOrg } from 'src/requests/members';
 import { useSWRConfig } from 'swr';
-export default function UserTag({ name, isAdmin = false, ...props }) {
+import { DotsHorizontalIcon } from '@heroicons/react/solid';
+import IconWrapper from '../icon-wrapper';
+
+export default function UserTag({ name, isAdmin = false, isOwner = false, ...props }) {
+  const generateUserBadge = () => {
+    if (isOwner) {
+      return <Badge colorScheme="primary">owner</Badge>;
+    }
+    if (isAdmin) {
+      return <Badge colorScheme="cyan">admin</Badge>;
+    }
+    return null;
+  };
+
   return (
     <Container>
-      <HStack spacing={4}>
+      <HStack spacing={1.5}>
         <Text fontWeight="medium" color={'gray.600'} noOfLines={1}>
           {name}
         </Text>
-        {isAdmin && <Badge colorScheme="cyan">admin</Badge>}
+        {generateUserBadge()}
+        {!isOwner && (
+          <Menu>
+            <MenuButton as={Button} size="xs" variant="ghost" m={0}>
+              <IconWrapper icon={DotsHorizontalIcon} color="gray.400" boxSize={5} />
+            </MenuButton>
+            <MenuList>
+              {isAdmin ? (
+                <MenuItem onClick={() => {}} color="gray.600">
+                  Remove admin
+                </MenuItem>
+              ) : (
+                <MenuItem onClick={() => {}} color="gray.600">
+                  Make admin
+                </MenuItem>
+              )}
+
+              <MenuItem onClick={() => {}} color="red.400">
+                Remove member
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        )}
       </HStack>
     </Container>
   );
@@ -148,7 +187,7 @@ function Container({ children }) {
       borderColor="gray.200"
       w="max-content"
       py={2}
-      px={4}
+      px={3}
       bg={'white'}
       rounded="lg"
       shadow="sm">

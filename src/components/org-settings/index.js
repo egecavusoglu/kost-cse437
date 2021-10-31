@@ -17,6 +17,7 @@ import { useOrgMembers } from 'src/requests/members';
 import UserTag, { AddUserTag } from 'src/components/user-tag';
 
 export default function OrgSettings({ org, ...props }) {
+  // get user id from global state and compare it to members to see if current user is a member, owner of org. render menus accordingly.
   const { isOpen, onOpen, onClose } = useDisclosure();
   const orgId = org?.id;
   const { members, loading, error } = useOrgMembers(orgId);
@@ -40,7 +41,11 @@ export default function OrgSettings({ org, ...props }) {
               </Heading>
               <Wrap py={4}>
                 {members?.map((m) => (
-                  <UserTag name={`${m.user.firstName} ${m.user.lastName}`} isAdmin={m.isAdmin} />
+                  <UserTag
+                    name={`${m.user.firstName} ${m.user.lastName}`}
+                    isAdmin={m.isAdmin}
+                    isOwner={m.isOwner}
+                  />
                 ))}
                 <AddUserTag orgId={orgId} />
               </Wrap>

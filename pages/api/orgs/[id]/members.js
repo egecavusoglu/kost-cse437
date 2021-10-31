@@ -50,7 +50,7 @@ export default async function handler(req, res) {
         },
       });
       if (!user || !user.id) {
-        res.status(400).json({
+        return res.status(400).json({
           isSuccess: false,
           error: {
             code: 'NOT_ADMIN',
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
       });
 
       if (!addingUser || !addingUser.isAdmin) {
-        res.status(403).json({
+        return res.status(403).json({
           isSuccess: false,
           error: {
             code: 'NOT_ADMIN',
@@ -89,7 +89,7 @@ export default async function handler(req, res) {
           isAdmin: isAdmin,
         },
       });
-      res.status(200).json({ isSuccess: true, data: addMemberOperation });
+      return res.status(200).json({ isSuccess: true, data: addMemberOperation });
     }
     res.status(404).json({ isSuccess: false, error: 'Route not found!' });
   } catch (err) {

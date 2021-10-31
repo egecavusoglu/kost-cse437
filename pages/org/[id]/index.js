@@ -42,7 +42,7 @@ export default function OrgDetails({ props }) {
           templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)']}
           autoColumns
           gap={6}
-          p={8}>
+          py={8}>
           <AddProductItem orgId={orgId} />
           {loading ? (
             <ProductItemSkeleton />
