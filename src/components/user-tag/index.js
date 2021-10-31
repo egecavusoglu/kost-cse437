@@ -27,8 +27,21 @@ import { MEMBERS_API_URI, addMemberToOrg } from 'src/requests/members';
 import { useSWRConfig } from 'swr';
 import { DotsHorizontalIcon } from '@heroicons/react/solid';
 import IconWrapper from '../icon-wrapper';
+import { getPermissionScore, canEditMemberStatus } from 'src/lib/permissions';
+import { changeMemberStatus, removeMemberFromOrg } from 'src/requests/members';
 
-export default function UserTag({ name, isAdmin = false, isOwner = false, ...props }) {
+export default function UserTag({
+  orgId,
+  userId,
+  name,
+  isAdmin = false,
+  isOwner = false,
+  permissionLevel, // Permission level of the current logged in user
+  ...props
+}) {
+  const { mutate } = useSWRConfig();
+  const toast = useToast();
+
   const generateUserBadge = () => {
     if (isOwner) {
       return <Badge colorScheme="primary">owner</Badge>;
@@ -38,6 +51,56 @@ export default function UserTag({ name, isAdmin = false, isOwner = false, ...pro
     }
     return null;
   };
+  const canEdit = canEditMemberStatus({
+    editor: permissionLevel,
+    editee: getPermissionScore({ isAdmin, isOwner }),
+  });
+
+  const changeAdminStatus = async (newAdminState) => {
+    const res = await changeMemberStatus(orgId, userId, { isAdmin: newAdminState });
+    if (!res) {
+      return toast({
+        title: 'Oops.',
+        description: "We've encountered an error.",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+    mutateMemberList();
+    toast({
+      title: 'Success',
+      description: 'Changed permissions!',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
+  const removeMember = async () => {
+    const res = await removeMemberFromOrg(orgId, userId);
+    if (!res) {
+      return toast({
+        title: 'Oops.',
+        description: "We've encountered an error.",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+    mutateMemberList();
+    toast({
+      title: 'Success',
+      description: 'Removed User!',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
+  const mutateMemberList = () => {
+    mutate(MEMBERS_API_URI(orgId));
+  };
 
   return (
     <Container>
@@ -46,23 +109,23 @@ export default function UserTag({ name, isAdmin = false, isOwner = false, ...pro
           {name}
         </Text>
         {generateUserBadge()}
-        {!isOwner && (
+        {canEdit && (
           <Menu>
             <MenuButton as={Button} size="xs" variant="ghost" m={0}>
               <IconWrapper icon={DotsHorizontalIcon} color="gray.400" boxSize={5} />
             </MenuButton>
             <MenuList>
               {isAdmin ? (
-                <MenuItem onClick={() => {}} color="gray.600">
-                  Remove admin
+                <MenuItem onClick={() => changeAdminStatus(false)} color="gray.600">
+                  Remove admin privileges
                 </MenuItem>
               ) : (
-                <MenuItem onClick={() => {}} color="gray.600">
+                <MenuItem onClick={() => changeAdminStatus(true)} color="gray.600">
                   Make admin
                 </MenuItem>
               )}
 
-              <MenuItem onClick={() => {}} color="red.400">
+              <MenuItem onClick={() => removeMember()} color="red.400">
                 Remove member
               </MenuItem>
             </MenuList>

@@ -91,6 +91,10 @@ export default async function handler(req, res) {
       });
       return res.status(200).json({ isSuccess: true, data: addMemberOperation });
     }
+
+    if (req.method == 'PUT') {
+    }
+
     res.status(404).json({ isSuccess: false, error: 'Route not found!' });
   } catch (err) {
     res.status(400).json({ isSuccess: false, error: stringifyError(err) });
