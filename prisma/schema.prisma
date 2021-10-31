@@ -47,6 +47,7 @@ model UsersOnOrganisations {
   organisation Organisation @relation(fields: [organisationId], references: [id])
   organisationId Int
   isAdmin Boolean @default(false)
+  isOwner Boolean @default(false)
   @@id([userId, organisationId])
 }
 
