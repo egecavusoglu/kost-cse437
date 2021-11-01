@@ -73,7 +73,15 @@ export default function OrgItem({ data = {}, ...props }) {
             <IconWrapper icon={DotsHorizontalIcon} color="gray.400" boxSize={5} />
           </MenuButton>
           <MenuList>
-            <MenuItem onClick={handleDeleteOrg} color="red.400">
+            {/* <MenuItem onClick={handleDeleteOrg} color="red.400"> */}
+            <MenuItem onClick = {() => {
+              const confirmBox = window.confirm(
+                "Do you really want to delete this organisation?"
+              )
+              if (confirmBox === true){
+                handleDeleteOrg() 
+              }
+            }}>
               Delete Organisation
             </MenuItem>
           </MenuList>
