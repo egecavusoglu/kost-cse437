@@ -12,7 +12,7 @@ export default function OrgSelector({ value, ...props }) {
     router.push(`/org/${oid}`);
   };
   return (
-    <HStack bg="white" px={12} py={2} spacing={4} borderBottom="2px solid" borderColor="gray.300">
+    <HStack bg="white" px={4} py={2} spacing={4} borderBottom="2px solid" borderColor="gray.300">
       <Text fontWeight="semibold" color="gray.600" fontSize="sm">
         Organisation
       </Text>
