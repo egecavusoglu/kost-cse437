@@ -60,6 +60,16 @@ function postRequest({ url, body = {}, headers }) {
     .catch((err) => err);
 }
 
+function putRequest({ url, body = {}, headers }) {
+  return fetch(url, {
+    headers: { headers, ...SHARED_HEADERS },
+    method: 'PUT',
+    body: JSON.stringify(body),
+  })
+    .then((r) => r.json())
+    .catch((err) => err);
+}
+
 function deleteRequest({ url, body = {}, headers }) {
   return fetch(url, {
     headers: { headers, ...SHARED_HEADERS },
@@ -76,4 +86,4 @@ function useQuery(url) {
   return useSWR(url, fetcher);
 }
 
-export { getRequest, postRequest, deleteRequest, useQuery };
+export { getRequest, postRequest, putRequest, deleteRequest, useQuery };
