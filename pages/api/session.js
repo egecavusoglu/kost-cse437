@@ -1,7 +1,5 @@
 import { stringifyError } from 'src/lib/error';
 import { checkValidAuthCookie } from 'src/lib/jwt';
-import { runMiddleware } from 'src/lib/middleware';
-import { prisma } from 'src/lib/prisma';
 
 /**
  * @endpoint /session
