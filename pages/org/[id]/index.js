@@ -8,6 +8,7 @@ import { useProducts } from 'src/requests/products';
 import OrgSettings from 'src/components/org-settings';
 import { useOrgMembers } from 'src/requests/members';
 import handler from 'pages/api/hello';
+import { useState } from 'react'
 
 export default function OrgDetails({ props }) {
   const router = useRouter();
@@ -16,33 +17,70 @@ export default function OrgDetails({ props }) {
   const { products, products_loading, products_error } = useProducts(orgId);
   const { members } = useOrgMembers(orgId);
   let finishedLoading = false;
-
+  const [sideBarDisplay, setSideBarDisplay] = useState("none");
   // hard load products and members to avoid undefined errors
   if (products && members) {
     finishedLoading = true;
   }
 
   return (
-    <div>
+    <div
+      height="100%"
+    >
       <Navbar />
-      <OrgSelector />
-      <Box m={[2, 4]} p={[2, 4]}>
-      {finishedLoading ? (
-        <Dashboard/> 
-      ): (
-        <div></div>
-      )}
-         
-        <Flex mb={4} alignItems="center" justifyContent="space-between">
-          {/* <Heading color="secondary.600" as="h2" fontSize="2xl">
+      <Box
+        display="flex"
+        flexDir="row"
+        height="100%"
+      >
+        <Box
+          flexGrow="1"
+          height="100%"
+        >
+          <OrgSelector />
+          <Box m={[2, 4]} p={[2, 4]}>
+            {finishedLoading ? (
+              <Dashboard />
+            ) : (
+              <div></div>
+            )}
+
+            <Flex mb={4} alignItems="center" justifyContent="space-between">
+              {/* <Heading color="secondary.600" as="h2" fontSize="2xl">
             {org?.name}
           </Heading> */}
-          <OrgSettings org={org} />
-        </Flex>
-        <Box py={1} mb={6}>
-          {/* <Text>{org?.description}</Text> */}
+              <OrgSettings org={org} />
+            </Flex>
+            <Box py={1} mb={6}>
+              {/* <Text>{org?.description}</Text> */}
+            </Box>
+            <Products />
+          </Box>
         </Box>
-        <Products />
+        <Box
+          display={sideBarDisplay}
+          flexDirection="column"
+          w="20%"
+          bg="white"
+          borderLeft="1px solid grey"
+        >
+          <Heading
+            fontSize="25px"
+            color="secondary.600"
+            textAlign="center"
+            marginBottom="5"
+          >Members</Heading>
+          {members?.map((member) => {
+            console.log(member);
+            return (
+              <Box
+                padding="5"
+              >
+                {member.user.firstName + " " + member.user.lastName}
+              </Box>
+            )
+          })}
+        </Box>
       </Box>
     </div>
   );
@@ -79,11 +117,23 @@ export default function OrgDetails({ props }) {
     return (
       <>
         <Heading color="secondary.600" as="h2" fontSize="xl">Dashboard</Heading>
-        <div>
-          <div>Monthly Total Cost: ${sum} </div>
-          <div>Total Services Used: {products.length} </div>
-          <div>Total Members: {members.length} </div>
-        </div>
+        <Box
+          overflow="hidden"
+          bg="white"
+          display="flex"
+          flexDirection="column"
+          w="45%"
+          minWidth={52}
+          shadow="md"
+          rounded="lg"
+          p={3}
+          marginTop="5"
+          onClick={toggleSideBarDisplay}
+        >
+          <Text fontSize="20px">Total Cost: ${sum} per month </Text>
+          <Text fontSize="20px">Services Used: {products.length} </Text>
+          <Text fontSize="20px">Members: {members.length} </Text>
+        </Box>
       </>
     );
   }
@@ -97,6 +147,16 @@ export default function OrgDetails({ props }) {
       sum += org.amount
     };
     return sum
+  }
+
+  /// Helper method that toggles the sidebar display to "flex" or "none"
+  function toggleSideBarDisplay() {
+    console.log("launch side bar ran");
+    if (sideBarDisplay == "none") {
+      setSideBarDisplay("flex")
+    } else {
+      setSideBarDisplay("none")
+    }
   }
 
 }
