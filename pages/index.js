@@ -10,7 +10,6 @@ import { useOrgs } from 'src/requests/organisation';
 /// Each file in /pages is an actual page navigtable by /xxx in the url. 
 export default function Home() {
   const { orgs, loading, error } = useOrgs();
-
   return (
     <div>
       <Navbar />

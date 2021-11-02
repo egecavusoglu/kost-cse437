@@ -7,7 +7,6 @@ import ProductItem, { AddProductItem, ProductItemSkeleton } from 'src/components
 import { useProducts } from 'src/requests/products';
 import OrgSettings from 'src/components/org-settings';
 import { useOrgMembers } from 'src/requests/members';
-import handler from 'pages/api/hello';
 import { useState } from 'react'
 
 export default function OrgDetails({ props }) {
@@ -69,15 +68,18 @@ export default function OrgDetails({ props }) {
             color="secondary.600"
             textAlign="center"
             marginBottom="5"
-          >Members</Heading>
+          >
+            Members
+          </Heading>
           {members?.map((member) => {
             console.log(member);
             return (
-              <Box
+              <WrapItem
                 padding="5"
+                key={member.id}
               >
                 {member.user.firstName + " " + member.user.lastName}
-              </Box>
+              </WrapItem>
             )
           })}
         </Box>
