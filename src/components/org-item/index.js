@@ -53,7 +53,7 @@ export default function OrgItem({ data = {}, ...props }) {
   return (
     <Container>
       <Box flex="1" w="full">
-        <Link to={`/org/${data.id}`} fontWeight="semibold" mb={2}>
+        <Link to={`/org/${organizationId}`} fontWeight="semibold" mb={2}>
           {data.name}
         </Link>
         <Box maxH={24} w="full" overflow="hidden">
