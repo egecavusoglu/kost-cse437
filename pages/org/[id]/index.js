@@ -91,7 +91,6 @@ export default function OrgDetails({ props }) {
           rounded="lg"
           p={3}
           marginBottom="10"
-        // onClick={toggleSideBarDisplay}
         >
           <Text fontSize="20px">Total Cost: ${sum} per month </Text>
           <Text fontSize="20px">Services Used: {products.length} </Text>
@@ -111,15 +110,4 @@ export default function OrgDetails({ props }) {
     };
     return sum
   }
-
-  /// Helper method that toggles the sidebar display to "flex" or "none"
-  // function toggleSideBarDisplay() {
-  //   console.log("launch side bar ran");
-  //   if (sideBarDisplay == "none") {
-  //     setSideBarDisplay("flex")
-  //   } else {
-  //     setSideBarDisplay("none")
-  //   }
-  // }
-
 }
