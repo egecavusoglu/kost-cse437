@@ -27,62 +27,24 @@ export default function OrgDetails({ props }) {
       height="100%"
     >
       <Navbar />
-      <Box
-        display="flex"
-        flexDir="row"
-        height="100%"
-      >
-        <Box
-          flexGrow="1"
-          height="100%"
-        >
-          <OrgSelector />
-          <Box m={[2, 4]} p={[2, 4]}>
-            {finishedLoading ? (
-              <Dashboard />
-            ) : (
-              <div></div>
-            )}
-
-            <Flex mb={4} alignItems="center" justifyContent="space-between">
-              {/* <Heading color="secondary.600" as="h2" fontSize="2xl">
-            {org?.name}
-          </Heading> */}
-              <OrgSettings org={org} />
-            </Flex>
-            <Box py={1} mb={6}>
-              {/* <Text>{org?.description}</Text> */}
-            </Box>
-            <Products />
-          </Box>
-        </Box>
-        <Box
-          display={sideBarDisplay}
-          flexDirection="column"
-          w="20%"
-          bg="white"
-          borderLeft="1px solid grey"
-        >
-          <Heading
-            fontSize="25px"
-            color="secondary.600"
-            textAlign="center"
-            marginBottom="5"
-          >
-            Members
+      <OrgSelector />
+      <Box m={[2, 4]} p={[2, 4]}>
+        <Flex mb={4} alignItems="center" justifyContent="space-between">
+          <Heading color="secondary.600" as="h2" fontSize="xl">
+            Overview
           </Heading>
-          {members?.map((member) => {
-            console.log(member);
-            return (
-              <WrapItem
-                padding="5"
-                key={member.id}
-              >
-                {member.user.firstName + " " + member.user.lastName}
-              </WrapItem>
-            )
-          })}
-        </Box>
+          <OrgSettings org={org} />
+        </Flex>
+       
+          {finishedLoading ? (
+            <Dashboard />
+          ) : (
+            <div></div>
+          )}
+          <Flex mb={4} alignItems="center" justifyContent="space-between">
+          </Flex>
+          <Products />
+       
       </Box>
     </div>
   );
@@ -118,7 +80,6 @@ export default function OrgDetails({ props }) {
     let sum = calculateMonthlyTotalCost();
     return (
       <>
-        <Heading color="secondary.600" as="h2" fontSize="xl">Dashboard</Heading>
         <Box
           overflow="hidden"
           bg="white"
@@ -129,8 +90,8 @@ export default function OrgDetails({ props }) {
           shadow="md"
           rounded="lg"
           p={3}
-          marginTop="5"
-          onClick={toggleSideBarDisplay}
+          marginBottom="10"
+        // onClick={toggleSideBarDisplay}
         >
           <Text fontSize="20px">Total Cost: ${sum} per month </Text>
           <Text fontSize="20px">Services Used: {products.length} </Text>
@@ -152,13 +113,13 @@ export default function OrgDetails({ props }) {
   }
 
   /// Helper method that toggles the sidebar display to "flex" or "none"
-  function toggleSideBarDisplay() {
-    console.log("launch side bar ran");
-    if (sideBarDisplay == "none") {
-      setSideBarDisplay("flex")
-    } else {
-      setSideBarDisplay("none")
-    }
-  }
+  // function toggleSideBarDisplay() {
+  //   console.log("launch side bar ran");
+  //   if (sideBarDisplay == "none") {
+  //     setSideBarDisplay("flex")
+  //   } else {
+  //     setSideBarDisplay("none")
+  //   }
+  // }
 
 }
