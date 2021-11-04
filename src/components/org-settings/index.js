@@ -41,7 +41,7 @@ export default function OrgSettings({ org, ...props }) {
       <Button variant="ghost" leftIcon={<SettingsIcon />} color="gray.600" onClick={onOpen}>
         Settings
       </Button>
-      <Drawer placement="bottom" onClose={onClose} isOpen={isOpen} bg={'secondary.400'}>
+      <Drawer placement="right" onClose={onClose} isOpen={isOpen} size={'lg'} bg={'secondary.400'}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton color="gray.100" />
@@ -49,7 +49,9 @@ export default function OrgSettings({ org, ...props }) {
             <Text color="gray.100">Settings</Text>
           </DrawerHeader>
           <DrawerBody>
-            <Box height={'50vh'} py={4}>
+            <Box
+              // height={'50vh'}
+              py={4}>
               <Heading as="h4" size="md" fontWeight="medium" color="gray.600">
                 Members
               </Heading>
