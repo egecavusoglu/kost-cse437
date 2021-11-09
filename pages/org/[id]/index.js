@@ -2,7 +2,7 @@ import Navbar from 'src/components/navbar';
 import { useRouter } from 'next/router';
 import { Button, Text, Flex, Box, Grid, Heading, Wrap, WrapItem } from '@chakra-ui/react';
 import OrgSelector from 'src/components/org-selector';
-import { useOrgDetails } from 'src/requests/organisation';
+import { useOrgDetails, useDashboard } from 'src/requests/organisation';
 import ProductItem, { AddProductItem, ProductItemSkeleton } from 'src/components/product-item';
 import { useProducts } from 'src/requests/products';
 import OrgSettings from 'src/components/org-settings';
@@ -13,14 +13,11 @@ export default function OrgDetails({ props }) {
   const router = useRouter();
   const orgId = router.query.id;
   const { org, loading, error } = useOrgDetails(orgId);
+  const { dashboard, dashboard_loding, dashboard_error } = useDashboard(orgId);
   const { products, products_loading, products_error } = useProducts(orgId);
   const { members } = useOrgMembers(orgId);
-  let finishedLoading = false;
   const [sideBarDisplay, setSideBarDisplay] = useState("none");
-  // hard load products and members to avoid undefined errors
-  if (products && members) {
-    finishedLoading = true;
-  }
+  const finishedLoading = products && members && dashboard;
 
   return (
     <div
@@ -35,7 +32,6 @@ export default function OrgDetails({ props }) {
           </Heading>
           <OrgSettings org={org} />
         </Flex>
-       
           {finishedLoading ? (
             <Dashboard />
           ) : (
@@ -77,7 +73,6 @@ export default function OrgDetails({ props }) {
 
   /// Represents the dashboard component inside the org/screen
   function Dashboard({ ...props }) {
-    let sum = calculateMonthlyTotalCost();
     return (
       <>
         <Box
@@ -92,22 +87,11 @@ export default function OrgDetails({ props }) {
           p={3}
           marginBottom="10"
         >
-          <Text fontSize="20px">Total Cost: ${sum} per month </Text>
-          <Text fontSize="20px">Services Used: {products.length} </Text>
+          <Text fontSize="20px">Total Cost: ${dashboard.sum} per month </Text>
+          <Text fontSize="20px">Services Used: {dashboard.servicesUsed} </Text>
           <Text fontSize="20px">Members: {members.length} </Text>
         </Box>
       </>
     );
-  }
-
-  /// Helper method to calculate montly cost
-  function calculateMonthlyTotalCost() {
-    let sum = 0;
-    products.forEach(addSum);
-
-    function addSum(org) {
-      sum += org.amount
-    };
-    return sum
   }
 }
