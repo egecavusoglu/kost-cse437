@@ -17,7 +17,7 @@ import { useOrgMembers } from 'src/requests/members';
 import UserTag, { AddUserTag } from 'src/components/user-tag';
 import { useAuthStore } from 'src/store';
 import { getPermissionScore, canAddMembersToOrg } from 'src/lib/permissions';
-
+import { sortMembers } from 'src/lib/order-members';
 export default function OrgSettings({ org, ...props }) {
   // get user id from global state and compare it to members to see if current user is a member, owner of org. render menus accordingly.
   const user = useAuthStore((s) => s.user);
@@ -26,7 +26,8 @@ export default function OrgSettings({ org, ...props }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const orgId = org?.id;
   const { members, loading, error } = useOrgMembers(orgId);
-
+  const sortedMembers = sortMembers(members);
+  console.log(sortedMembers);
   const currentUsersMember = members?.find((e) => e.userId == currentUserId);
   const isCurrentUserOwner = currentUsersMember?.isOwner;
   const isCurrentUserAdmin = currentUsersMember?.isAdmin;
@@ -56,7 +57,7 @@ export default function OrgSettings({ org, ...props }) {
                 Members
               </Heading>
               <Wrap py={4}>
-                {members?.map((m) => (
+                {sortedMembers?.map((m) => (
                   <UserTag
                     key={m.userId}
                     orgId={orgId}
