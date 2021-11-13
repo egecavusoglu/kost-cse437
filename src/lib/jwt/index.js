@@ -35,4 +35,22 @@ function authenticationMiddleware(req, res, next) {
   });
 }
 
-export { generateAccessToken, authenticationMiddleware };
+/**
+ * @function checkValidAuthCookie
+ * @returns void
+ */
+function checkValidAuthCookie(req) {
+  const header = getAuthCookie(req);
+  const token = header && header.split(' ')[1];
+  if (!token) {
+    return false;
+  }
+  return jwt.verify(token, JWT_TOKEN_SECRET, (err, user) => {
+    if (err) {
+      return false;
+    }
+    return true;
+  });
+}
+
+export { generateAccessToken, authenticationMiddleware, checkValidAuthCookie };
