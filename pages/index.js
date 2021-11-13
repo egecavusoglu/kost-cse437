@@ -1,7 +1,4 @@
-import Head from 'next/head';
-import Link from 'src/components/link';
-import { Wrap, Grid, WrapItem, useToast } from '@chakra-ui/react';
-import OrgSelector from 'src/components/org-selector';
+import { Grid } from '@chakra-ui/react';
 import OrgItem, { AddOrgItem, OrgItemSkeleton } from 'src/components/org-item';
 import Navbar from 'src/components/navbar';
 import { useOrgs } from 'src/requests/organisation';
@@ -28,18 +25,18 @@ export default function Home() {
   );
 }
 
-// Similar layout with flex wrap
-// <Wrap p={8} spacing={4} justifyContent="space-evenly">
-//       <WrapItem>
-//         <AddOrgItem />
-//       </WrapItem>
-//       {loading ? (
-//         <OrgItemSkeleton />
-//       ) : (
-//         orgs?.map((org) => (
-//           <WrapItem key={org.id}>
-//             <OrgItem key={org.id} data={org} />
-//           </WrapItem>
-//         ))
-//       )}
-//     </Wrap>
+import { checkValidAuthCookie } from 'src/lib/jwt';
+export async function getServerSideProps(context) {
+  const hasValidCookie = checkValidAuthCookie(context.req);
+  if (!hasValidCookie) {
+    return {
+      redirect: {
+        destination: '/welcome',
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {}, // will be passed to the page component as props
+  };
+}
