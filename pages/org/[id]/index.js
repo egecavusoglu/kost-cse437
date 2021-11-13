@@ -2,32 +2,45 @@ import Navbar from 'src/components/navbar';
 import { useRouter } from 'next/router';
 import { Button, Text, Flex, Box, Grid, Heading, Wrap, WrapItem } from '@chakra-ui/react';
 import OrgSelector from 'src/components/org-selector';
-import { useOrgDetails } from 'src/requests/organisation';
+import { useOrgDetails, useDashboard } from 'src/requests/organisation';
 import ProductItem, { AddProductItem, ProductItemSkeleton } from 'src/components/product-item';
 import { useProducts } from 'src/requests/products';
 import OrgSettings from 'src/components/org-settings';
+import { useOrgMembers } from 'src/requests/members';
+import { useState } from 'react'
 
 export default function OrgDetails({ props }) {
   const router = useRouter();
   const orgId = router.query.id;
   const { org, loading, error } = useOrgDetails(orgId);
-  const { products } = useProducts(orgId);
+  const { dashboard, dashboard_loding, dashboard_error } = useDashboard(orgId);
+  const { products, products_loading, products_error } = useProducts(orgId);
+  const { members } = useOrgMembers(orgId);
+  const [sideBarDisplay, setSideBarDisplay] = useState("none");
+  const finishedLoading = products && members && dashboard;
 
   return (
-    <div>
+    <div
+      height="100%"
+    >
       <Navbar />
       <OrgSelector />
       <Box m={[2, 4]} p={[2, 4]}>
         <Flex mb={4} alignItems="center" justifyContent="space-between">
-          <Heading color="secondary.600" as="h2" fontSize="2xl">
-            {org?.name}
+          <Heading color="secondary.600" as="h2" fontSize="xl">
+            Overview
           </Heading>
           <OrgSettings org={org} />
         </Flex>
-        <Box py={1} mb={6}>
-          <Text>{org?.description}</Text>
-        </Box>
-        <Products />
+          {finishedLoading ? (
+            <Dashboard />
+          ) : (
+            <div></div>
+          )}
+          <Flex mb={4} alignItems="center" justifyContent="space-between">
+          </Flex>
+          <Products />
+       
       </Box>
     </div>
   );
@@ -54,6 +67,30 @@ export default function OrgDetails({ props }) {
             ))
           )}
         </Grid>
+      </>
+    );
+  }
+
+  /// Represents the dashboard component inside the org/screen
+  function Dashboard({ ...props }) {
+    return (
+      <>
+        <Box
+          overflow="hidden"
+          bg="white"
+          display="flex"
+          flexDirection="column"
+          w="45%"
+          minWidth={52}
+          shadow="md"
+          rounded="lg"
+          p={3}
+          marginBottom="10"
+        >
+          <Text fontSize="20px">Total Cost: ${dashboard.sum} per month </Text>
+          <Text fontSize="20px">Services Used: {dashboard.servicesUsed} </Text>
+          <Text fontSize="20px">Members: {members.length} </Text>
+        </Box>
       </>
     );
   }

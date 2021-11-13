@@ -24,6 +24,7 @@ import IconWrapper from '../icon-wrapper';
 import { deleteOrganisation } from 'src/requests/organisation';
 import { useSWRConfig } from 'swr';
 
+/// Represents one organization card.
 export default function OrgItem({ data = {}, ...props }) {
   const { mutate } = useSWRConfig();
   const toast = useToast();
@@ -50,6 +51,7 @@ export default function OrgItem({ data = {}, ...props }) {
     });
     mutate('/api/orgs');
   };
+
   return (
     <Container>
       <Box flex="1" w="full">
@@ -83,6 +85,7 @@ export default function OrgItem({ data = {}, ...props }) {
   );
 }
 
+// Represents the stack containing all your organizations.
 function Container({ children, ...props }) {
   return (
     <VStack

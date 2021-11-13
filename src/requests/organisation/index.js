@@ -71,4 +71,13 @@ async function deleteOrganisation(orgId) {
   }
 }
 
-export { createOrganisation, getOrganisations, useOrgs, useOrgDetails, deleteOrganisation };
+function useDashboard(orgId) {
+  const { data, error } = useQuery(`/api/orgs/${orgId}/dashboard`);
+  return {
+    dashboard: data,
+    dashboard_loading: !error && !data,
+    dashboard_error: error,
+  };
+}
+
+export { createOrganisation, getOrganisations, useOrgs, useOrgDetails, deleteOrganisation, useDashboard };
