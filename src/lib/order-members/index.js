@@ -1,11 +1,11 @@
 import { getPermissionScore } from 'src/lib/permissions';
 function sortMembers(members) {
-  return members?.sort(
-    (a, b) =>
-      0 -
-      getPermissionScore({ isAdmin: a.isAdmin, owner: a.isOwner }) +
-      getPermissionScore({ isAdmin: b.isAdmin, owner: b.isOwner })
-  );
+  const sorted = members?.sort((a, b) => {
+    const aScore = getPermissionScore({ isAdmin: a.isAdmin, isOwner: a.isOwner });
+    const bScore = getPermissionScore({ isAdmin: b.isAdmin, isOwner: b.isOwner });
+    return bScore - aScore;
+  });
+  return sorted;
 }
 
 export { sortMembers };

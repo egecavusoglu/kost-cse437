@@ -27,7 +27,6 @@ export default function OrgSettings({ org, ...props }) {
   const orgId = org?.id;
   const { members, loading, error } = useOrgMembers(orgId);
   const sortedMembers = sortMembers(members);
-  console.log(sortedMembers);
   const currentUsersMember = members?.find((e) => e.userId == currentUserId);
   const isCurrentUserOwner = currentUsersMember?.isOwner;
   const isCurrentUserAdmin = currentUsersMember?.isAdmin;
