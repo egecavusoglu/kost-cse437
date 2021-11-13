@@ -5,9 +5,11 @@ import OrgSelector from 'src/components/org-selector';
 import OrgItem, { AddOrgItem, OrgItemSkeleton } from 'src/components/org-item';
 import Navbar from 'src/components/navbar';
 import { useOrgs } from 'src/requests/organisation';
+
+/// Homepage dashboard where your organizations live in. 
+/// Each file in /pages is an actual page navigtable by /xxx in the url. 
 export default function Home() {
   const { orgs, loading, error } = useOrgs();
-
   return (
     <div>
       <Navbar />
@@ -17,7 +19,10 @@ export default function Home() {
         gap={6}
         p={8}>
         <AddOrgItem />
-        {loading ? <OrgItemSkeleton /> : orgs?.map((org) => <OrgItem key={org.id} data={org} />)}
+        {
+          error ? <div>Error loading organizations</div> : 
+        (loading ? <OrgItemSkeleton /> : orgs?.map((org) => <OrgItem key={org.id} data={org} />))
+        }
       </Grid>
     </div>
   );
