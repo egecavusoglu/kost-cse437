@@ -75,7 +75,15 @@ export default function ProductItem({ data = {}, ...props }) {
             <IconWrapper icon={DotsHorizontalIcon} color="gray.400" boxSize={5} />
           </MenuButton>
           <MenuList>
-            <MenuItem onClick={handleDeleteProduct} color="red.400">
+            {/* <MenuItem onClick={handleDeleteProduct} color="red.400"> */}
+            <MenuItem onClick= {() => {
+              const confirmBox = window.confirm(
+                "Do you really want to delete this product?"
+              )
+              if (confirmBox === true){
+                handleDeleteProduct() 
+              }
+            }} color="red.400">
               Delete Product
             </MenuItem>
           </MenuList>
