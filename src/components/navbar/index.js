@@ -127,7 +127,9 @@ const UserButton = ({ user }) => {
         <Text py={2} px={3} fontSize="sm">
           {user.firstName} {user.lastName}
         </Text>
-        <MenuItem>My Profile</MenuItem>
+        <CustomLink to="/profile" barebones>
+          <MenuItem>My Profile</MenuItem>
+        </CustomLink>
         <MenuItem onClick={handleLogout} color="red.400">
           Log out
         </MenuItem>
