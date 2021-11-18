@@ -1,5 +1,7 @@
-import { getRequest } from 'src/lib/fetch';
+import { getRequest, useQuery } from 'src/lib/fetch';
 import { useAuthStore } from 'src/store';
+
+const PROFILE_API_URI = '/api/profile';
 
 /**
  * Fetches user info from server and sets global user state accordingly.
@@ -7,7 +9,7 @@ import { useAuthStore } from 'src/store';
  */
 async function getProfile() {
   try {
-    const response = await getRequest({ url: '/api/profile' });
+    const response = await getRequest({ url: PROFILE_API_URI });
     if (response.isSuccess) {
       // set user profile to global state.
       useAuthStore.setState({
@@ -36,4 +38,13 @@ function resetProfile() {
   });
 }
 
-export { getProfile, resetProfile };
+function useProfile() {
+  const { data, error } = useQuery(PROFILE_API_URI);
+  return {
+    profile: data?.data,
+    loading: !error && !data,
+    error,
+  };
+}
+
+export { getProfile, resetProfile, useProfile };
