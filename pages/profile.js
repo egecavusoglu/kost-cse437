@@ -1,28 +1,51 @@
-import { Box, VStack, Input, Text } from '@chakra-ui/react';
+import { Stack, Box, VStack, Input, Text, Heading, Button } from '@chakra-ui/react';
 import Navbar from 'src/components/navbar';
 import { useProfile } from 'src/requests/profile';
 
 export default function Profile() {
   const { profile, loading, error } = useProfile();
-  const { user } = profile;
+  const user = profile?.user;
   const [localUser, setLocalUser] = useState(user);
-  console.log(localUser);
+
+  useEffect(() => {
+    setLocalUser(user);
+  }, [profile]);
+
   return (
     <div>
       <Navbar />
-      <Box p={4}>
-        <VStack bg="white" w="full" borderRadius="lg" p={4} alignItems="flex-start">
+      <VStack p={4}>
+        <VStack
+          bg="white"
+          w="full"
+          borderRadius="lg"
+          p={4}
+          alignItems="flex-start"
+          spacing={6}
+          maxW="2xl">
+          <Heading fontSize="2xl" fontWeight="medium" color="secondary.600">
+            Profile
+          </Heading>
+          <Stack direction={['column', 'row']} spacing={4}>
+            <TextInputGroup
+              label="First Name"
+              value={localUser?.firstName}
+              setValue={(v) => setLocalUser({ ...localUser, firstName: v })}
+            />
+            <TextInputGroup
+              label="Last Name"
+              value={localUser?.lastName}
+              setValue={(v) => setLocalUser({ ...localUser, lastName: v })}
+            />
+          </Stack>
           <TextInputGroup
-            label="First Name"
-            value={localUser?.firstName}
-            setValue={(v) => {
-              console.log(v);
-              setLocalUser({ firstName: v, ...localUser });
-            }}
+            label="Email Address"
+            value={localUser?.email}
+            setValue={(v) => setLocalUser({ ...localUser, email: v })}
           />
-          <TextInputGroup label="Last Name" value={localUser?.lastName} />
+          <Button colorScheme={'primary'}>Update Profile</Button>
         </VStack>
-      </Box>
+      </VStack>
     </div>
   );
 }
@@ -30,14 +53,16 @@ export default function Profile() {
 function TextInputGroup({ label, value, setValue }) {
   return (
     <VStack gap={2} alignItems="flex-start">
-      <Text>{label}</Text>
+      <Text fontWeight="medium" color="gray.600">
+        {label}
+      </Text>
       <Input value={value} onChange={(e) => setValue(e.target.value)} />
     </VStack>
   );
 }
 
 import { checkValidAuthCookie } from 'src/lib/jwt';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 export async function getServerSideProps(context) {
   const hasValidCookie = checkValidAuthCookie(context.req);
   if (!hasValidCookie) {
