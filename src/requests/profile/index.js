@@ -1,4 +1,4 @@
-import { getRequest, useQuery } from 'src/lib/fetch';
+import { getRequest, putRequest, useQuery } from 'src/lib/fetch';
 import { useAuthStore } from 'src/store';
 
 const PROFILE_API_URI = '/api/profile';
@@ -40,6 +40,12 @@ function resetProfile() {
 
 function useProfile() {
   const { data, error } = useQuery(PROFILE_API_URI);
+  if (data) {
+    useAuthStore.setState({
+      isLoggedIn: true,
+      user: data?.data.user,
+    });
+  }
   return {
     profile: data?.data,
     loading: !error && !data,
@@ -47,4 +53,23 @@ function useProfile() {
   };
 }
 
-export { getProfile, resetProfile, useProfile };
+async function updateProfile({ firstName, lastName, email }) {
+  try {
+    const res = await putRequest({
+      url: PROFILE_API_URI,
+      body: {
+        firstName,
+        lastName,
+        email,
+      },
+    });
+    if (res?.isSuccess) {
+      return res.data;
+    }
+    throw res.error;
+  } catch (err) {
+    return false;
+  }
+}
+
+export { PROFILE_API_URI, getProfile, resetProfile, useProfile, updateProfile };
