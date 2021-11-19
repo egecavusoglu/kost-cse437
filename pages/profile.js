@@ -111,18 +111,6 @@ export default function Profile() {
     </div>
   );
 }
-
-function TextInputGroup({ label, value, setValue }) {
-  return (
-    <VStack gap={2} alignItems="flex-start">
-      <Text fontWeight="medium" color="gray.600">
-        {label}
-      </Text>
-      <Input value={value} onChange={(e) => setValue(e.target.value)} />
-    </VStack>
-  );
-}
-
 import { checkValidAuthCookie } from 'src/lib/jwt';
 import { useEffect, useState } from 'react';
 export async function getServerSideProps(context) {

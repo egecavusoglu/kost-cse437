@@ -25,7 +25,6 @@ export default async function handler(req, res) {
     }
     if (req.method == 'PUT') {
       const { firstName, lastName, email } = req.body;
-      console.log(checkNotEmpty(firstName));
       if (!checkNotEmpty(firstName) || !checkNotEmpty(lastName) || !checkNotEmpty(email)) {
         return res.status(400).json({
           isSuccess: false,
