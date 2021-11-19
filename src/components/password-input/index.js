@@ -7,7 +7,6 @@ export default function PasswordInput({ value, setValue, ...props }) {
   return (
     <InputGroup size="md">
       <Input
-        type="text"
         type={show ? 'text' : 'password'}
         value={value}
         onChange={(e) => setValue(e.target.value)}
