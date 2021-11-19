@@ -1,5 +1,5 @@
 import {
-  HStack,
+  Stack,
   Box,
   VStack,
   Input,
@@ -62,8 +62,9 @@ export default function Profile() {
   return (
     <div>
       <Navbar />
-      <VStack p={4}>
-        <form onSubmit={handleSubmit}>
+
+      <form onSubmit={handleSubmit}>
+        <VStack p={4}>
           <VStack
             bg="white"
             w="full"
@@ -71,11 +72,11 @@ export default function Profile() {
             p={4}
             alignItems="flex-start"
             spacing={6}
-            maxW="2xl">
+            maxW="3xl">
             <Heading fontSize="2xl" fontWeight="medium" color="secondary.600">
               Profile
             </Heading>
-            <HStack spacing={2}>
+            <Stack w="full" direction={['column', 'row']} spacing={2}>
               <FormControl isRequired={true} id="first_name">
                 <FormLabel color="gray.700">First Name</FormLabel>
                 <Input
@@ -95,7 +96,7 @@ export default function Profile() {
                 />
                 <FormErrorMessage fontSize="xs">Please use a valid email.</FormErrorMessage>
               </FormControl>
-            </HStack>
+            </Stack>
             <FormControl isInvalid={invalidEmail} isRequired id="email">
               <FormLabel color="gray.700">Email Address</FormLabel>
               <Input type="email" onChange={handleEmailChange} value={localUser?.email} />
@@ -105,8 +106,8 @@ export default function Profile() {
               Update Profile
             </Button>
           </VStack>
-        </form>
-      </VStack>
+        </VStack>
+      </form>
     </div>
   );
 }

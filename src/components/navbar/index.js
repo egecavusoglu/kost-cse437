@@ -74,7 +74,8 @@ export default function WithSubnavigation() {
           <IconButton
             onClick={onToggle}
             icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
-            variant={'ghost'}
+            variant={'none'}
+            color="primary.300"
             aria-label={'Toggle Navigation'}
           />
         </Flex>
