@@ -1,4 +1,4 @@
-import { postRequest } from 'src/lib/fetch';
+import { postRequest, putRequest } from 'src/lib/fetch';
 import { getProfile, resetProfile } from '../profile';
 import Router from 'next/router';
 
@@ -51,4 +51,25 @@ async function logout() {
   }
 }
 
-export { login, signup, logout };
+const PASSWORD_API_URI = '/api/profile/password';
+
+async function resetPassword({ newPassword, oldPassword }) {
+  try {
+    const res = await putRequest({
+      url: PASSWORD_API_URI,
+      body: {
+        newPassword,
+        oldPassword,
+      },
+    });
+
+    if (res?.isSuccess) {
+      return res;
+    }
+    return res;
+  } catch (err) {
+    return err;
+  }
+}
+
+export { login, signup, logout, resetPassword };
