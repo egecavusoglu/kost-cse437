@@ -76,14 +76,16 @@ export default function OrgItem({ data = {}, ...props }) {
           </MenuButton>
           <MenuList>
             {/* <MenuItem onClick={handleDeleteOrg} color="red.400"> */}
-            <MenuItem onClick = {() => {
-              const confirmBox = window.confirm(
-                "Do you really want to delete this organisation?"
-              )
-              if (confirmBox === true){
-                handleDeleteOrg() 
-              }
-            }}>
+            <MenuItem
+              color="red.400"
+              onClick={() => {
+                const confirmBox = window.confirm(
+                  'Do you really want to delete this organisation?'
+                );
+                if (confirmBox === true) {
+                  handleDeleteOrg();
+                }
+              }}>
               Delete Organisation
             </MenuItem>
           </MenuList>
