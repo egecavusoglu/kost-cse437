@@ -74,7 +74,8 @@ export default function WithSubnavigation() {
           <IconButton
             onClick={onToggle}
             icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
-            variant={'ghost'}
+            variant={'none'}
+            color="primary.300"
             aria-label={'Toggle Navigation'}
           />
         </Flex>
@@ -127,7 +128,9 @@ const UserButton = ({ user }) => {
         <Text py={2} px={3} fontSize="sm">
           {user.firstName} {user.lastName}
         </Text>
-        <MenuItem>My Profile</MenuItem>
+        <CustomLink to="/profile" barebones>
+          <MenuItem>My Profile</MenuItem>
+        </CustomLink>
         <MenuItem onClick={handleLogout} color="red.400">
           Log out
         </MenuItem>

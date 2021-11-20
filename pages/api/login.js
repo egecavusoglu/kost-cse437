@@ -1,9 +1,8 @@
-import bcrypt from 'bcrypt';
 import { generateAccessToken } from 'src/lib/jwt';
 import { setAuthCookie } from 'src/lib/cookie';
 import { prisma } from 'src/lib/prisma';
 import { stringifyError } from 'src/lib/error';
-
+import { checkPassword } from 'src/lib/password';
 /**
  * @endpoint /login
  * @post
@@ -43,11 +42,4 @@ export default async function handler(req, res) {
   } catch (err) {
     res.status(400).json({ isSuccess: false, error: stringifyError(err) });
   }
-}
-
-async function checkPassword(pwd, hashedPwd) {
-  if (!pwd || !hashedPwd) {
-    return false;
-  }
-  return await bcrypt.compare(pwd, hashedPwd);
 }
