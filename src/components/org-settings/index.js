@@ -13,6 +13,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { SettingsIcon } from '@chakra-ui/icons';
+import { useOrgDetails, useDashboard } from 'src/requests/organisation';
 import { useOrgMembers } from 'src/requests/members';
 import UserTag, { AddUserTag } from 'src/components/user-tag';
 import { useAuthStore } from 'src/store';
@@ -25,6 +26,7 @@ export default function OrgSettings({ org, ...props }) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const orgId = org?.id;
+  const { orgDetail, load, e } = useOrgDetails(orgId);
   const { members, loading, error } = useOrgMembers(orgId);
   const sortedMembers = sortMembers(members);
   const currentUsersMember = members?.find((e) => e.userId == currentUserId);
@@ -69,6 +71,29 @@ export default function OrgSettings({ org, ...props }) {
                 ))}
                 {currentUserCanAddMembers && <AddUserTag orgId={orgId} />}
               </Wrap>
+
+              <Heading as="h4" size="md" fontWeight="medium" color="gray.600">
+                Organisation Details
+              </Heading>
+              <Box
+                overflow="hidden"
+          bg="white"
+          display="flex"
+          flexDirection="column"
+          w="45%"
+          minWidth={52}
+          shadow="md"
+          rounded="lg"
+          p={3}
+          marginBottom="10"
+          marginTop="1"
+        >
+          <Text fontSize="20px">Organisation Name: {orgDetail}</Text>
+          <Text fontSize="20px">Description: {orgDetail}</Text>
+          <Text fontSize="20px">Subscription Plan: {orgDetail}</Text>
+          </Box>
+
+
             </Box>
           </DrawerBody>
         </DrawerContent>
