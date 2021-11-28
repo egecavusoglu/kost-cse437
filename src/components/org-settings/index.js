@@ -88,6 +88,7 @@ export default function OrgSettings({ org, ...props }) {
           marginBottom="10"
           marginTop="1"
         >
+          {/* not able to get data from orgDetail by use useOrgDetails() function */}
           <Text fontSize="20px">Organisation Name: {orgDetail}</Text>
           <Text fontSize="20px">Description: {orgDetail}</Text>
           <Text fontSize="20px">Subscription Plan: {orgDetail}</Text>
