@@ -32,10 +32,13 @@ function useProducts(orgId) {
   };
 }
 
-function useProdDetails(orgId) {
-  const { data, error } = useQuery(`/api/orgs/${orgId}/products`);
+/**
+ * Request to fetch product details
+ */
+function useProdDetails(productId, orgId) {
+  const { data, error } = useQuery(`/api/orgs/${orgId}/products/${productId}`);
   return {
-    prod: data?.data,
+    product: data?.data,
     loading: !error && !data,
     error,
   };

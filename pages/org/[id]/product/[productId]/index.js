@@ -9,10 +9,10 @@ import { Button, Text, Flex, Box, Grid, Heading, Wrap, WrapItem, VStack } from '
 
 export default function ProductDetailsPage({ data = {}, ...props }) {
   const router = useRouter();
-  const productId = data.id;
+  const productId = router.query.productId;
   const orgId = router.query.id;
-  // const { org, loading, error } = useOrgDetails(orgId);
-  const { products, prod } = useProducts(orgId);
+  const { product, loading, error } = useProdDetails(productId, orgId);
+  console.log(product);
   return (
     <>
       <div>
@@ -21,19 +21,19 @@ export default function ProductDetailsPage({ data = {}, ...props }) {
         <Box m={[2, 4]} p={[2, 4]}>
           <Flex mb={4} alignItems="center" justifyContent="space-between">
             <Heading color="secondary.600" as="h2" fontSize="2xl">
-              {prod?.name}
+              {product?.name}
             </Heading>
           </Flex>
           <Box py={1} mb={6}>
-            <Text>{prod?.description}</Text>
+            <Text>{product?.description}</Text>
           </Box>
         </Box>
         <Link to={`/org/${orgId}/product/${productId}`} fontWeight="semibold" mb={2}>
-          {data.name}
+          {/* {data.name} */}
         </Link>
         <Box maxH={24} w="full" overflow="hidden">
           <Text fontSize="sm" textAlign="left" color="gray.700" noOfLines={4}>
-            {data.description}
+            {/* {data.description} */}
           </Text>
         </Box>
 
