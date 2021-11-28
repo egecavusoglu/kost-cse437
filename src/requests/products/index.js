@@ -32,6 +32,15 @@ function useProducts(orgId) {
   };
 }
 
+function useProdDetails(orgId) {
+  const { data, error } = useQuery(`/api/orgs/${orgId}/products`);
+  return {
+    prod: data?.data,
+    loading: !error && !data,
+    error,
+  };
+}
+
 async function deleteProduct(productId) {
   try {
     const res = await deleteRequest({
@@ -46,4 +55,4 @@ async function deleteProduct(productId) {
   }
 }
 
-export { createProduct, useProducts, deleteProduct };
+export { createProduct, useProducts, useProdDetails, deleteProduct };
