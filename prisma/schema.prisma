@@ -29,6 +29,7 @@ model Organisation {
   createdAt DateTime @default(now())
   name String @unique
   description String
+  budget Int
   plan SubscriptionPlan @default(FREE)
   members UsersOnOrganisations[]
   products Product[]

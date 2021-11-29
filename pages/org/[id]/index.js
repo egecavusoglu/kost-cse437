@@ -8,6 +8,7 @@ import { useProducts } from 'src/requests/products';
 import OrgSettings from 'src/components/org-settings';
 import { useOrgMembers } from 'src/requests/members';
 import { useState } from 'react'
+import { Vega } from 'react-vega';
 
 export default function OrgDetails({ props }) {
   const router = useRouter();
@@ -32,15 +33,15 @@ export default function OrgDetails({ props }) {
           </Heading>
           <OrgSettings org={org} />
         </Flex>
-          {finishedLoading ? (
-            <Dashboard />
-          ) : (
-            <div></div>
-          )}
-          <Flex mb={4} alignItems="center" justifyContent="space-between">
-          </Flex>
-          <Products />
-       
+        {finishedLoading ? (
+          <Dashboard />
+        ) : (
+          <div></div>
+        )}
+        <Flex mb={4} alignItems="center" justifyContent="space-between">
+        </Flex>
+        <Products />
+
       </Box>
     </div>
   );
@@ -73,6 +74,7 @@ export default function OrgDetails({ props }) {
 
   /// Represents the dashboard component inside the org/screen
   function Dashboard({ ...props }) {
+
     return (
       <>
         <Box
@@ -87,6 +89,7 @@ export default function OrgDetails({ props }) {
           p={3}
           marginBottom="10"
         >
+          {budgetGraph()}
           <Text fontSize="20px">Total Cost: ${dashboard.sum} per month </Text>
           <Text fontSize="20px">Services Used: {dashboard.servicesUsed} </Text>
           <Text fontSize="20px">Members: {members.length} </Text>
@@ -94,4 +97,63 @@ export default function OrgDetails({ props }) {
       </>
     );
   }
+}
+
+function budgetGraph({ ...props }) {
+  const spec = {
+    $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
+    layer: [
+      {
+        mark: { type: 'line', color: '#0084FF', interpolate: 'monotone' },
+        encoding: {
+          x: {
+            field: 'date',
+            type: 'temporal',
+            timeUnit: 'yearmonthdate',
+            axis: { title: '' },
+          },
+          y: {
+            field: 'budget',
+            type: 'quantitative',
+            axis: { title: '' },
+          },
+        },
+      },
+    ],
+    config: {
+      "axis": {
+        "grid": false,
+      },
+      "style": {
+        "cell": {
+          "stroke": "transparent"
+        }
+      }
+    },
+  };
+
+  const data = {
+    "values": [
+      { "budget": 500, "date": "2019-10-01" },
+      { "budget": 450, "date": "2019-10-02" },
+      { "budget": 300, "date": "2019-10-03" },
+      { "budget": 200, "date": "2019-10-04" },
+      { "budget": 140, "date": "2019-10-05" },
+      { "budget": 250, "date": "2019-10-06" },
+      { "budget": 100, "date": "2019-10-07" }
+    ]
+  }
+
+  return (
+    <>
+      <Vega
+        spec={{
+          ...spec,
+          width: 400,
+          height: 300,
+          data: data,
+        }}
+      />
+    </>
+  )
 }
