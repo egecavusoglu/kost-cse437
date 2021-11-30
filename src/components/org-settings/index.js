@@ -26,7 +26,7 @@ export default function OrgSettings({ org, ...props }) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const orgId = org?.id;
-  const { orgDetail, load, e } = useOrgDetails(orgId);
+  
   const { members, loading, error } = useOrgMembers(orgId);
   const sortedMembers = sortMembers(members);
   const currentUsersMember = members?.find((e) => e.userId == currentUserId);
@@ -37,6 +37,7 @@ export default function OrgSettings({ org, ...props }) {
     isOwner: isCurrentUserOwner,
   });
   const currentUserCanAddMembers = canAddMembersToOrg(currentUserPermissionsScore);
+  console.log(org);
 
   return (
     <>
@@ -88,10 +89,11 @@ export default function OrgSettings({ org, ...props }) {
           marginBottom="10"
           marginTop="1"
         >
+          
           {/* not able to get data from orgDetail by use useOrgDetails() function */}
-          <Text fontSize="20px">Organisation Name: {orgDetail}</Text>
-          <Text fontSize="20px">Description: {orgDetail}</Text>
-          <Text fontSize="20px">Subscription Plan: {orgDetail}</Text>
+          <Text fontSize="20px">Organisation Name:{org.name} </Text>
+          <Text fontSize="20px">Description: {org.description}</Text>
+          <Text fontSize="20px">Subscription Plan: {org.plan}</Text>
           </Box>
 
 
