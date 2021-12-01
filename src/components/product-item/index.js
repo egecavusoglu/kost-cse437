@@ -61,11 +61,11 @@ export default function ProductItem({ data = {}, ...props }) {
         <Link to={`/org/${orgId}/product/${productId}`} fontWeight="semibold" mb={2}>
           {data.name}
         </Link>
-        {/* <Box maxH={24} w="full" overflow="hidden">
+        <Box maxH={24} w="full" overflow="hidden">
           <Text fontSize="sm" textAlign="left" color="gray.700" noOfLines={4}>
             {data.description}
           </Text>
-        </Box> */}
+        </Box>
       </Box>
 
       <HStack w="full" justifyContent="start" alignItems="center">
