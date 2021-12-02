@@ -91,9 +91,9 @@ export default function OrgSettings({ org, ...props }) {
         >
           
           {/* not able to get data from orgDetail by use useOrgDetails() function */}
-          <Text fontSize="20px">Organisation Name:{org.name} </Text>
-          <Text fontSize="20px">Description: {org.description}</Text>
-          <Text fontSize="20px">Subscription Plan: {org.plan}</Text>
+          <Text fontSize="20px">Organisation Name:{org?.name} </Text>
+          <Text fontSize="20px">Description: {org?.description}</Text>
+          <Text fontSize="20px">Subscription Plan: {org?.plan}</Text>
           </Box>
 
 
