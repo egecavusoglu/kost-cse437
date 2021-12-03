@@ -1,5 +1,7 @@
 import { getRequest, useQuery, postRequest, deleteRequest } from 'src/lib/fetch';
 
+const ORG_API_URI = '/api/org';
+
 async function createOrganisation({ name, description, plan }) {
   try {
     const res = await postRequest({
@@ -80,4 +82,24 @@ function useDashboard(orgId) {
   };
 }
 
-export { createOrganisation, getOrganisations, useOrgs, useOrgDetails, deleteOrganisation, useDashboard };
+async function updateOrg({ name, description, plan }) {
+  try {
+    const res = await putRequest({
+      url: ORG_API_URI,
+      body: {
+        name,
+        description,
+        plan,
+      },
+    });
+    if (res?.isSuccess) {
+      return res.data;
+    }
+    throw res.error;
+  } catch (err) {
+    return false;
+  }
+}
+
+
+export { createOrganisation, getOrganisations, useOrgs, useOrgDetails, deleteOrganisation, useDashboard,updateOrg, ORG_API_URI };
