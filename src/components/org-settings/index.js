@@ -57,6 +57,10 @@ export default function OrgSettings({ org, ...props }) {
   // add update form submit handler
   const toast = useToast();
 
+  // useEffect(() => {
+  //   setLocalOrg(org);
+  // }, [org]);
+
   const [localOrg, setLocalOrg] = useState(org);
 
   const handleSubmit = async (e) => {
