@@ -1,6 +1,6 @@
 import { getRequest, useQuery, postRequest, deleteRequest } from 'src/lib/fetch';
 
-const ORG_API_URI = '/api/org';
+const ORG_API_URI = '/api/org/${orgId}';
 
 async function createOrganisation({ name, description, plan }) {
   try {
