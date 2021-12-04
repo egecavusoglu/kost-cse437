@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import AddProductModal from '../add-product-modal';
+import Link from 'src/components/link';
 import { getCurrencySymbol } from 'src/lib/currency';
 import IconWrapper from '../icon-wrapper';
 import { deleteProduct } from 'src/requests/products';
@@ -28,7 +29,8 @@ export default function ProductItem({ data = {}, ...props }) {
   const { mutate } = useSWRConfig();
   const toast = useToast();
   const formattedAmount = `${getCurrencySymbol(data.currency)}${data.amount}`;
-
+  const productId = data.id;
+  const orgId = data.organisationId;
   const handleDeleteProduct = async () => {
     const result = await deleteProduct(data.id);
     if (!result) {
@@ -49,13 +51,16 @@ export default function ProductItem({ data = {}, ...props }) {
     });
     mutate(`/api/orgs/${data.organisationId}/products`);
   };
-
+  console.log(data);
   return (
     <Container>
       <Box w="full" flex="1">
-        <Text fontWeight="semibold" mb={2} color="secondary.600">
+        {/* <Text fontWeight="semibold" mb={2} color="secondary.600">
           {data.name}
-        </Text>
+        </Text> */}
+        <Link to={`/org/${orgId}/product/${productId}`} fontWeight="semibold" mb={2}>
+          {data.name}
+        </Link>
         <Box maxH={24} w="full" overflow="hidden">
           <Text fontSize="sm" textAlign="left" color="gray.700" noOfLines={4}>
             {data.description}
