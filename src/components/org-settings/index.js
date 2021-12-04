@@ -17,7 +17,7 @@ import { useOrgMembers } from 'src/requests/members';
 import UserTag, { AddUserTag } from 'src/components/user-tag';
 import { useAuthStore } from 'src/store';
 import { getPermissionScore, canAddMembersToOrg } from 'src/lib/permissions';
-
+import { sortMembers } from 'src/lib/order-members';
 export default function OrgSettings({ org, ...props }) {
   // get user id from global state and compare it to members to see if current user is a member, owner of org. render menus accordingly.
   const user = useAuthStore((s) => s.user);
@@ -26,7 +26,7 @@ export default function OrgSettings({ org, ...props }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const orgId = org?.id;
   const { members, loading, error } = useOrgMembers(orgId);
-
+  const sortedMembers = sortMembers(members);
   const currentUsersMember = members?.find((e) => e.userId == currentUserId);
   const isCurrentUserOwner = currentUsersMember?.isOwner;
   const isCurrentUserAdmin = currentUsersMember?.isAdmin;
@@ -41,7 +41,7 @@ export default function OrgSettings({ org, ...props }) {
       <Button variant="ghost" leftIcon={<SettingsIcon />} color="gray.600" onClick={onOpen}>
         Settings
       </Button>
-      <Drawer placement="bottom" onClose={onClose} isOpen={isOpen} bg={'secondary.400'}>
+      <Drawer placement="right" onClose={onClose} isOpen={isOpen} size={'lg'} bg={'secondary.400'}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton color="gray.100" />
@@ -49,12 +49,14 @@ export default function OrgSettings({ org, ...props }) {
             <Text color="gray.100">Settings</Text>
           </DrawerHeader>
           <DrawerBody>
-            <Box height={'50vh'} py={4}>
+            <Box
+              // height={'50vh'}
+              py={4}>
               <Heading as="h4" size="md" fontWeight="medium" color="gray.600">
                 Members
               </Heading>
               <Wrap py={4}>
-                {members?.map((m) => (
+                {sortedMembers?.map((m) => (
                   <UserTag
                     key={m.userId}
                     orgId={orgId}

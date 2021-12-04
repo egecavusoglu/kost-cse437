@@ -27,8 +27,8 @@ function useProducts(orgId) {
   const { data, error } = useQuery(`/api/orgs/${orgId}/products`);
   return {
     products: data?.data,
-    loading: !error && !data,
-    error,
+    products_loading: !error && !data,
+    products_error: error,
   };
 }
 

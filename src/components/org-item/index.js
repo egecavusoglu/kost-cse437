@@ -24,6 +24,7 @@ import IconWrapper from '../icon-wrapper';
 import { deleteOrganisation } from 'src/requests/organisation';
 import { useSWRConfig } from 'swr';
 
+/// Represents one organization card.
 export default function OrgItem({ data = {}, ...props }) {
   const { mutate } = useSWRConfig();
   const toast = useToast();
@@ -50,6 +51,7 @@ export default function OrgItem({ data = {}, ...props }) {
     });
     mutate('/api/orgs');
   };
+
   return (
     <Container>
       <Box flex="1" w="full">
@@ -73,7 +75,15 @@ export default function OrgItem({ data = {}, ...props }) {
             <IconWrapper icon={DotsHorizontalIcon} color="gray.400" boxSize={5} />
           </MenuButton>
           <MenuList>
-            <MenuItem onClick={handleDeleteOrg} color="red.400">
+            {/* <MenuItem onClick={handleDeleteOrg} color="red.400"> */}
+            <MenuItem onClick = {() => {
+              const confirmBox = window.confirm(
+                "Do you really want to delete this organisation?"
+              )
+              if (confirmBox === true){
+                handleDeleteOrg() 
+              }
+            }}>
               Delete Organisation
             </MenuItem>
           </MenuList>
@@ -83,6 +93,7 @@ export default function OrgItem({ data = {}, ...props }) {
   );
 }
 
+// Represents the stack containing all your organizations.
 function Container({ children, ...props }) {
   return (
     <VStack

@@ -1,13 +1,12 @@
-import Head from 'next/head';
-import Link from 'src/components/link';
-import { Wrap, Grid, WrapItem, useToast } from '@chakra-ui/react';
-import OrgSelector from 'src/components/org-selector';
+import { Grid } from '@chakra-ui/react';
 import OrgItem, { AddOrgItem, OrgItemSkeleton } from 'src/components/org-item';
 import Navbar from 'src/components/navbar';
 import { useOrgs } from 'src/requests/organisation';
+
+/// Homepage dashboard where your organizations live in. 
+/// Each file in /pages is an actual page navigtable by /xxx in the url. 
 export default function Home() {
   const { orgs, loading, error } = useOrgs();
-
   return (
     <div>
       <Navbar />
@@ -17,24 +16,27 @@ export default function Home() {
         gap={6}
         p={8}>
         <AddOrgItem />
-        {loading ? <OrgItemSkeleton /> : orgs?.map((org) => <OrgItem key={org.id} data={org} />)}
+        {
+          error ? <div>Error loading organizations</div> : 
+        (loading ? <OrgItemSkeleton /> : orgs?.map((org) => <OrgItem key={org.id} data={org} />))
+        }
       </Grid>
     </div>
   );
 }
 
-// Similar layout with flex wrap
-// <Wrap p={8} spacing={4} justifyContent="space-evenly">
-//       <WrapItem>
-//         <AddOrgItem />
-//       </WrapItem>
-//       {loading ? (
-//         <OrgItemSkeleton />
-//       ) : (
-//         orgs?.map((org) => (
-//           <WrapItem key={org.id}>
-//             <OrgItem key={org.id} data={org} />
-//           </WrapItem>
-//         ))
-//       )}
-//     </Wrap>
+import { checkValidAuthCookie } from 'src/lib/jwt';
+export async function getServerSideProps(context) {
+  const hasValidCookie = checkValidAuthCookie(context.req);
+  if (!hasValidCookie) {
+    return {
+      redirect: {
+        destination: '/welcome',
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {}, // will be passed to the page component as props
+  };
+}

@@ -1,7 +1,6 @@
 import { prisma } from 'src/lib/prisma';
-import bcrypt from 'bcrypt';
 import { stringifyError } from 'src/lib/error';
-
+import { hashPassword } from 'src/lib/password';
 export default async function handler(req, res) {
   try {
     if (req.method == 'POST') {
@@ -15,7 +14,7 @@ export default async function handler(req, res) {
 
 async function saveNewUser(body) {
   const { firstName, lastName, email, password } = body;
-  const hashedPass = await bcrypt.hash(password, 10);
+  const hashedPass = await hashPassword(password);
   const user = await prisma.user.create({
     data: {
       email: email,
