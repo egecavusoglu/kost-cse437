@@ -82,10 +82,10 @@ function useDashboard(orgId) {
   };
 }
 
-async function updateOrg({ name, description, plan }) {
+async function updateOrg(orgId, { name, description, plan }) {
   try {
     const res = await putRequest({
-      url: ORG_API_URI,
+      url: `/api/orgs/${orgId}`,
       body: {
         name,
         description,
