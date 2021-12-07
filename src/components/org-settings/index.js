@@ -65,7 +65,7 @@ export default function OrgSettings({ org, ...props }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await updateOrg({
+    const res = await updateOrg(orgId, {
       name: localOrg.name,
       description: localOrg.description,
       plan: localOrg.plan,
